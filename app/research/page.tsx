@@ -59,15 +59,20 @@ export default function Research() {
           <div className="mb-12 space-y-6">
             <div className="space-y-4">
               <p className="text-gray-800 text-justify leading-relaxed">
-                Multimodal large language models enable us to build large-scale historical datasets from archival image scans at faster speed than ever before.
+                Multimodal large language models enable us to build historical datasets from archival image scans on demand. Using new microlevel data, my research investigates how innovation and institutions shaped labour markets and economic growth in Germany during the Industrial Revolution.
               </p>
 
               <p className="text-gray-800 text-justify leading-relaxed">
-                With this new abundance of microlevel data, we can increase the resolution of our understanding. Institutions mattered, but how did they interact with technological change and economic growth at the local level?
-              </p>
-
-              <p className="text-gray-800 text-justify leading-relaxed">
-                In the long term I aim to build AI Historians: agents that read archives, build datasets, and reason across entire corpora. They could process more primary sources in a day than a human could in a lifetime and support their claims linked to the original scans. If they find new patterns, mechanistic interpretability can help us to understand their reasoning.
+                In the long term, I aim to build AI Economic Historians: AI agents that scrape digital archives for image scans, turn them into structured datasets, link these to publicly accessible ones, and then analyse the merged dataset quantitatively. This abundance of data may also allow us to model historical economies as complex systems, with{' '}
+                <a 
+                  href="https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-600 transition-colors underline"
+                >
+                  world models
+                </a>
+                {' '}grounded in the surviving primary sources.
               </p>
             </div>
           </div>
