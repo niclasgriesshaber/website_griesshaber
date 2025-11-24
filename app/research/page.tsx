@@ -58,11 +58,11 @@ export default function Research() {
           {/* Vision Statement */}
           <div className="mb-12 space-y-6">
             <div className="space-y-4">
-              <p className="text-gray-800 text-justify leading-relaxed">
+              <p className="text-gray-800 text-left md:text-justify leading-relaxed">
                 Multimodal large language models enable us to build historical datasets from archival image scans on demand. Using new microlevel data, my research investigates how innovation and institutions shaped labour markets and economic growth in Germany during the Industrial Revolution.
               </p>
 
-              <p className="text-gray-800 text-justify leading-relaxed">
+              <p className="text-gray-800 text-left md:text-justify leading-relaxed">
                 In the long term, I aim to build AI Economic Historians: AI agents that scrape digital archives for image scans, turn them into structured datasets, link these to publicly accessible ones, and then analyse the merged dataset quantitatively. This abundance of data may also allow us to model historical economies as complex systems, with{' '}
                 <a 
                   href="https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/"
