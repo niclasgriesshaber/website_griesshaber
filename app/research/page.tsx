@@ -52,7 +52,7 @@ export default function Research() {
         </nav>
 
         {/* Research Content */}
-        <div className="max-w-4xl mx-auto px-6 pt-12 pb-24">
+        <div className="max-w-4xl mx-auto px-6 pt-16 pb-24">
           {/* Vision Statement */}
           <div className="mb-12 space-y-6">
             <div className="space-y-4">

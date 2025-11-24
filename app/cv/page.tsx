@@ -53,7 +53,7 @@ export default function CV() {
         </nav>
 
         {/* CV Content */}
-        <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="max-w-4xl mx-auto px-6 pt-16 pb-12">
           {/* Download Button */}
           <div className="mb-12 text-center">
             <a 

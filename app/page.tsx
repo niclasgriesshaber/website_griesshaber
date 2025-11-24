@@ -48,10 +48,10 @@ export default function Home() {
         </nav>
 
         {/* Hero Section */}
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-6 pt-16">
           <div className="flex flex-col items-center">
             {/* Title above image */}
-            <h2 className="text-xl md:text-4xl font-light mb-4 md:mb-8 mt-12 md:mt-8 tracking-tight text-center">
+            <h2 className="text-xl md:text-4xl font-light mb-4 md:mb-8 tracking-tight text-center">
               I am a researcher in<br className="md:hidden" /> Economic History and AI.
             </h2>
 
