@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import TextParticles from '../../components/TextParticles'
+// import TextParticles from '../../components/TextParticles' // Uncomment to reactivate animation
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -81,10 +81,10 @@ export default function CV() {
             </p>
           </div>
 
-          {/* Animated Text Particles - Hidden on mobile */}
-          <div className="hidden md:block">
+          {/* Animated Text Particles - DISABLED - Uncomment below to reactivate */}
+          {/* <div className="hidden md:block">
             <TextParticles />
-          </div>
+          </div> */}
         </div>
       </div>
     </main>
