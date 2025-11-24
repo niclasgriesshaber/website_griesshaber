@@ -61,15 +61,15 @@ export default function Research() {
           {/* Vision Statement */}
           <div className="mb-12 space-y-6">
             <div className="space-y-4">
-              <p className="text-gray-800 text-justify">
+              <p className="text-gray-800 text-justify leading-relaxed">
                 Multimodal large language models enable us to build large-scale historical datasets from archival image scans at faster speed than ever before.
               </p>
 
-              <p className="text-gray-800 text-justify">
+              <p className="text-gray-800 text-justify leading-relaxed">
                 With this new abundance of microlevel data, we can increase the resolution of our understanding. Institutions mattered, but how did they interact with technological change and economic growth at the local level?
               </p>
 
-              <p className="text-gray-800 text-justify">
+              <p className="text-gray-800 text-justify leading-relaxed">
                 In the long term I aim to build AI Historians: agents that read archives, build datasets, and reason across entire corpora. They could process more primary sources in a day than a human could in a lifetime and support their claims linked to the original scans. If they find new patterns, mechanistic interpretability can help us to understand their reasoning.
               </p>
             </div>
