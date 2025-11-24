@@ -10,6 +10,8 @@ interface Particle {
   size: number
   color: string
   speed: number
+  opacity: number
+  hue: number
 }
 
 export default function TextParticles() {
@@ -133,57 +135,74 @@ export default function TextParticles() {
 
       // Create particles
       if (!isTransition) {
-        // Initial spawn - circular formation
-        validPositions.forEach(pos => {
-          const angle = Math.random() * Math.PI * 2
-          const distance = Math.random() * 100
+        // Initial spawn - spiral formation with staggered entry
+        validPositions.forEach((pos, index) => {
+          const angle = (index * 0.1) % (Math.PI * 2)
+          const distance = 150 + Math.random() * 100
+          const baseHue = 220 + (index % 40) * 3
           newParticles.push({
             x: canvas.width / 2 + Math.cos(angle) * distance,
             y: canvas.height / 2 + Math.sin(angle) * distance,
             targetX: pos.x,
             targetY: pos.y,
             size: particleSize,
-            color: `rgba(99, 102, 241, ${0.95})`,
-            speed: 0.05 + Math.random() * 0.03
+            color: `hsla(${baseHue}, 75%, 65%, 0.9)`,
+            speed: 0.06 + Math.random() * 0.04,
+            opacity: 0.9,
+            hue: baseHue
           })
         })
       } else {
-        // Simplified transition logic
-        const numParticles = Math.max(particles.length, validPositions.length)
+        // Transition with explosion effect
+        const centerX = canvas.width / 2
+        const centerY = canvas.height / 2
         
-        // Create a pool of available target positions
-        const availableTargets = [...validPositions]
+        // First, scatter existing particles outward briefly
+        particles.forEach((particle) => {
+          const dx = particle.x - centerX
+          const dy = particle.y - centerY
+          const distance = Math.sqrt(dx * dx + dy * dy)
+          const pushDistance = 80
+          particle.x += (dx / distance) * pushDistance * 0.3
+          particle.y += (dy / distance) * pushDistance * 0.3
+        })
         
-        // First, reuse existing particles
+        // Then assign new targets
         particles.forEach((particle, index) => {
-          if (index < availableTargets.length) {
-            const target = availableTargets[index]
+          if (index < validPositions.length) {
+            const target = validPositions[index]
+            const baseHue = 180 + (index % 40) * 4
             newParticles.push({
               x: particle.x,
               y: particle.y,
               targetX: target.x,
               targetY: target.y,
               size: particleSize,
-              color: `rgba(99, 102, 241, ${0.95})`,
-              speed: 0.03
+              color: `hsla(${baseHue}, 70%, 60%, 0.9)`,
+              speed: 0.05 + Math.random() * 0.02,
+              opacity: 0.9,
+              hue: baseHue
             })
           }
         })
         
-        // Add new particles if needed
+        // Add new particles if needed with wave entry
         if (validPositions.length > particles.length) {
           for (let i = particles.length; i < validPositions.length; i++) {
             const target = validPositions[i]
-            // Create new particles from the edges
-            const edgeX = target.x < canvas.width / 2 ? -20 : canvas.width + 20
+            const angle = Math.random() * Math.PI * 2
+            const distance = 200
+            const baseHue = 180 + (i % 40) * 4
             newParticles.push({
-              x: edgeX,
-              y: target.y,
+              x: centerX + Math.cos(angle) * distance,
+              y: centerY + Math.sin(angle) * distance,
               targetX: target.x,
               targetY: target.y,
               size: particleSize,
-              color: `rgba(99, 102, 241, ${0.95})`,
-              speed: 0.03
+              color: `hsla(${baseHue}, 70%, 60%, 0.9)`,
+              speed: 0.05 + Math.random() * 0.02,
+              opacity: 0.9,
+              hue: baseHue
             })
           }
         }
@@ -195,27 +214,54 @@ export default function TextParticles() {
     // Animation
     let animationFrameId: number
     let lastTime = 0
-    const morphInterval = 8000
+    const morphInterval = 7000
 
     const animate = (timestamp: number) => {
       if (!ctx) return
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // Fade out effect for smoother transitions
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      particles.forEach(particle => {
+      particles.forEach((particle, index) => {
         const dx = particle.targetX - particle.x
         const dy = particle.targetY - particle.y
-        particle.x += dx * particle.speed
-        particle.y += dy * particle.speed
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        
+        // Smooth easing function
+        const ease = 1 - Math.pow(1 - particle.speed, 2)
+        particle.x += dx * ease
+        particle.y += dy * ease
 
+        // Subtle floating motion when near target
+        if (distance < 5) {
+          const floatX = Math.sin(timestamp * 0.001 + index * 0.1) * 0.5
+          const floatY = Math.cos(timestamp * 0.0015 + index * 0.15) * 0.5
+          particle.x += floatX
+          particle.y += floatY
+        }
+
+        // Dynamic color shift
+        const hueShift = Math.sin(timestamp * 0.0005 + index * 0.05) * 10
+        const currentHue = particle.hue + hueShift
+
+        // Draw particle with glow effect
+        ctx.shadowBlur = 8
+        ctx.shadowColor = `hsla(${currentHue}, 70%, 60%, 0.6)`
+        
+        ctx.fillStyle = `hsla(${currentHue}, 75%, 65%, ${particle.opacity})`
         ctx.beginPath()
-        ctx.fillStyle = particle.color
-        ctx.fillRect(
+        ctx.arc(
           Math.round(particle.x),
           Math.round(particle.y),
-          particleSize,
-          particleSize
+          particleSize * 1.2,
+          0,
+          Math.PI * 2
         )
+        ctx.fill()
+        
+        // Reset shadow
+        ctx.shadowBlur = 0
       })
 
       if (timestamp - lastTime > morphInterval) {
