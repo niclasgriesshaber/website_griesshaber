@@ -42,13 +42,15 @@ export default function CV() {
       {/* Content */}
       <div className="relative z-10">
         {/* Header/Navigation */}
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-gray-200">
-          <h1 className="text-xl font-medium tracking-tight">
-            <Link href="/">Niclas Griesshaber</Link>
-          </h1>
-          <div className="space-x-8">
-            <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
-            <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
+        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 className="text-xl font-medium tracking-tight">
+              <Link href="/">Niclas Griesshaber</Link>
+            </h1>
+            <div className="space-x-8">
+              <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
+              <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
+            </div>
           </div>
         </nav>
 
