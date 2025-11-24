@@ -37,7 +37,7 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10">
         {/* Header/Navigation */}
-        <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <nav className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center border-b border-gray-200">
           <h1 className="text-xl font-medium tracking-tight">
             <Link href="/">Niclas Griesshaber</Link>
           </h1>
