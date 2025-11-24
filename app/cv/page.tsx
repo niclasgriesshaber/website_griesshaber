@@ -54,14 +54,17 @@ export default function CV() {
 
         {/* CV Content */}
         <div className="max-w-4xl mx-auto px-6 py-12">
-          {/* Download Link */}
-          <div className="mb-8 text-center">
+          {/* Download Button */}
+          <div className="mb-12 text-center">
             <a 
               href="/cv_griesshaber.pdf" 
-              className="text-2xl text-blue-500 hover:text-blue-600 transition-colors"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
               target="_blank"
               rel="noopener noreferrer"
             >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
               Download my CV as PDF
             </a>
           </div>
