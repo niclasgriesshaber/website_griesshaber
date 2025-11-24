@@ -148,16 +148,11 @@ export default function TextParticles() {
           })
         })
       } else {
-        // Simplified transition logic
-        const numParticles = Math.max(particles.length, validPositions.length)
-        
-        // Create a pool of available target positions
-        const availableTargets = [...validPositions]
-        
+        // Transition logic - reuse and reassign particles
         // First, reuse existing particles
         particles.forEach((particle, index) => {
-          if (index < availableTargets.length) {
-            const target = availableTargets[index]
+          if (index < validPositions.length) {
+            const target = validPositions[index]
             newParticles.push({
               x: particle.x,
               y: particle.y,
@@ -165,7 +160,7 @@ export default function TextParticles() {
               targetY: target.y,
               size: particleSize,
               color: `rgba(99, 102, 241, 0.95)`,
-              speed: 0.06 + Math.random() * 0.02
+              speed: 0.07 + Math.random() * 0.02
             })
           }
         })
@@ -183,7 +178,7 @@ export default function TextParticles() {
               targetY: target.y,
               size: particleSize,
               color: `rgba(99, 102, 241, 0.95)`,
-              speed: 0.06 + Math.random() * 0.02
+              speed: 0.07 + Math.random() * 0.02
             })
           }
         }
@@ -198,7 +193,7 @@ export default function TextParticles() {
     const morphInterval = 8000
 
     const animate = (timestamp: number) => {
-      if (!ctx) return
+      if (!ctx || !canvas) return
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
@@ -206,11 +201,11 @@ export default function TextParticles() {
         const dx = particle.targetX - particle.x
         const dy = particle.targetY - particle.y
         
-        // Smoother easing with higher speed
+        // Smooth easing for fluid movement
         particle.x += dx * particle.speed
         particle.y += dy * particle.speed
 
-        ctx.beginPath()
+        // Draw particle
         ctx.fillStyle = particle.color
         ctx.fillRect(
           particle.x,
@@ -220,10 +215,13 @@ export default function TextParticles() {
         )
       })
 
+      // Morph to next text at interval
       if (timestamp - lastTime > morphInterval) {
         currentTextIndex = (currentTextIndex + 1) % texts.length
         const newParticles = createParticlesFromText(texts[currentTextIndex], true)
-        particles = newParticles
+        if (newParticles.length > 0) {
+          particles = newParticles
+        }
         lastTime = timestamp
       }
 

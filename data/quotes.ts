@@ -1,7 +1,7 @@
 export const quotes = [
   {
     text: "Institutions are not necessarily or even usually created to be socially efficient; rather they are created to serve the interests of those with bargaining power.",
-    author: "Daron Acemoglu"
+    author: "Daron Acemoğlu"
   },
   {
     text: "The key to understanding how institutions affect economic growth lies in realizing that economic growth occurs when people take resources and rearrange them in ways that make them more valuable.",
@@ -13,7 +13,7 @@ export const quotes = [
   },
   {
     text: "Economic institutions shape economic incentives: the incentives to become educated, to save and invest, to innovate and adopt new technologies.",
-    author: "Daron Acemoglu"
+    author: "Daron Acemoğlu"
   },
   {
     text: "The past shows us that institutions can persist for centuries, shaping economic life in ways that can be either beneficial or harmful.",
@@ -57,7 +57,7 @@ export const quotes = [
   },
   {
     text: "Countries differ in their economic success because of their different institutions, the rules influencing how the economy works, and the incentives that motivate people.",
-    author: "Daron Acemoglu & James Robinson"
+    author: "Daron Acemoğlu & James Robinson"
   },
   {
     text: "Historical findings on guilds provide strong support for the view that institutions arise and survive for centuries not because they are efficient, but because they serve the distributional interests of powerful groups.",
