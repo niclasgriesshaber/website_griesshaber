@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Research() {
   return (
-    <main className="relative">
+    <main className="min-h-screen relative">
       {/* Animated Background Elements - Optimized for performance */}
       <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
         {/* Animated gradient orbs with GPU acceleration */}
@@ -46,7 +46,7 @@ export default function Research() {
             <h1 className="text-xl font-medium tracking-tight">
               <Link href="/">Niclas Griesshaber</Link>
             </h1>
-            <div className="space-x-8">
+            <div className="space-x-4 md:space-x-8">
               <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
               <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
             </div>
