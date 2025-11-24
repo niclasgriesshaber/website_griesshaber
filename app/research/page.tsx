@@ -68,7 +68,7 @@ export default function Research() {
                   href="https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-600 transition-colors underline"
+                  className="text-blue-500 hover:text-blue-600 transition-colors"
                 >
                   world models
                 </a>
