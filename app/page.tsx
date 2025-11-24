@@ -52,7 +52,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             {/* Title above image */}
             <h2 className="text-xl md:text-4xl font-light mb-4 md:mb-8 mt-12 md:mt-8 tracking-tight text-center">
-              I am a researcher in<br className="md:hidden" /> Economic History and Machine Learning.
+              I am a researcher in<br className="md:hidden" /> Economic History and AI.
             </h2>
 
             {/* Main content with animations - grid to avoid overlap */}
