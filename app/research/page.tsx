@@ -83,17 +83,17 @@ export default function Research() {
               Papers
             </h2>
             <div className="space-y-6">
-              {/* Sheilagh paper on top */}
+              {/* German Patents paper */}
               <div className="p-4 -mx-4">
                 <h3 className="text-xl font-light mb-2 leading-relaxed">
-                  <Link href="https://cepr.org/publications/dp20556" target="_blank" rel="noopener noreferrer">
-                    Transplanting Craft Guilds to Colonial Latin America: A Large Language Model Analysis
+                  <Link href="https://arxiv.org/abs/2512.19675" target="_blank" rel="noopener noreferrer">
+                    Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877-1918)
                   </Link>
                 </h3>
                 <p className="text-gray-600 text-base">
                   <span className="italic">with </span>
-                  <Link href="https://www.sheilaghogilvie.com/" className="text-blue-500 hover:text-blue-600 transition-colors">
-                    Sheilagh Ogilvie
+                  <Link href="https://www.vwl.uni-mannheim.de/streb/team/prof-dr-streb" className="text-blue-500 hover:text-blue-600 transition-colors">
+                    Jochen Streb
                   </Link>
                 </p>
               </div>
@@ -108,6 +108,21 @@ export default function Research() {
                 <p className="text-gray-600 text-base">
                   <span className="italic">with </span>
                   Gavin Greif and Robin Greif
+                </p>
+              </div>
+
+              {/* Sheilagh paper */}
+              <div className="p-4 -mx-4">
+                <h3 className="text-xl font-light mb-2 leading-relaxed">
+                  <Link href="https://cepr.org/publications/dp20556" target="_blank" rel="noopener noreferrer">
+                    Transplanting Craft Guilds to Colonial Latin America: A Large Language Model Analysis
+                  </Link>
+                </h3>
+                <p className="text-gray-600 text-base">
+                  <span className="italic">with </span>
+                  <Link href="https://www.sheilaghogilvie.com/" className="text-blue-500 hover:text-blue-600 transition-colors">
+                    Sheilagh Ogilvie
+                  </Link>
                 </p>
               </div>
             </div>
