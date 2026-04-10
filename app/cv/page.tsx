@@ -49,7 +49,6 @@ export default function CV() {
             </h1>
             <div className="space-x-4 md:space-x-8">
               <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
-              <Link href="/test" className="text-sm font-medium hover:text-gray-600 transition-colors">TEST</Link>
               <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
             </div>
           </div>
