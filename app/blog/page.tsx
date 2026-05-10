@@ -32,6 +32,7 @@ type ProxyItem = {
   description?: string
   content?: string
   thumbnail?: string
+  enclosure?: { link?: string; type?: string }
 }
 
 function decodeEntities(s: string): string {
@@ -102,7 +103,7 @@ async function getPosts(): Promise<Post[]> {
               link: item.link ?? '',
               date: item.pubDate ?? '',
               excerpt: buildExcerpt(content, item.description ?? ''),
-              image: item.thumbnail || firstBodyImage(content),
+              image: item.enclosure?.link || item.thumbnail || firstBodyImage(content),
               readTime: readTimeMin(content),
             }
           })
