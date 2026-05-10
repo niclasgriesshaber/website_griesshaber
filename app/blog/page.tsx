@@ -87,7 +87,7 @@ async function getPosts(): Promise<Post[]> {
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      const res = await fetch(FEED_URL, { headers, cache: 'no-store' })
+      const res = await fetch(FEED_URL, { headers, next: { revalidate: 3600 } })
       if (!res.ok) {
         console.error(`[blog] feed fetch attempt ${attempt} returned status ${res.status}`)
       } else {
