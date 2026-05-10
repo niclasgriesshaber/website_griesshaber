@@ -18,17 +18,20 @@ type Post = {
 
 const FEED_URL = 'https://aieconhistory.substack.com/feed'
 const SUBSTACK_URL = 'https://aieconhistory.substack.com'
+// Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
+// detection), so we proxy through rss2json. Their free tier serves up to
+// 10k requests/day; we use ~1/build, with a daily cron rebuild.
+const PROXY_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(FEED_URL)}`
 const EXCERPT_CHARS = 240
 const WORDS_PER_MINUTE = 200
 
-function stripCdata(s: string): string {
-  return s.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '').trim()
-}
-
-function pickTag(item: string, tag: string): string {
-  const escaped = tag.replace(/:/g, '\\:')
-  const m = item.match(new RegExp(`<${escaped}[^>]*>([\\s\\S]*?)</${escaped}>`))
-  return m ? stripCdata(m[1]) : ''
+type ProxyItem = {
+  title?: string
+  link?: string
+  pubDate?: string
+  description?: string
+  content?: string
+  thumbnail?: string
 }
 
 function decodeEntities(s: string): string {
@@ -56,11 +59,6 @@ function buildExcerpt(content: string, fallback: string): string {
   return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).trimEnd() + '…'
 }
 
-function pickEnclosureImage(item: string): string {
-  const m = item.match(/<enclosure\s+[^>]*url="([^"]+)"[^>]*type="image\/[^"]+"/)
-  return m ? decodeEntities(m[1]) : ''
-}
-
 function firstBodyImage(content: string): string {
   const m = content.match(/<img[^>]+src="([^"]+)"/)
   return m ? decodeEntities(m[1]) : ''
@@ -81,42 +79,44 @@ function fmtDate(s: string): string {
 async function getPosts(): Promise<Post[]> {
   const headers = {
     'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
-    'Accept': 'application/rss+xml, application/xml;q=0.9, text/xml;q=0.8',
+    'Accept': 'application/json',
   }
   const MAX_ATTEMPTS = 3
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      const res = await fetch(FEED_URL, { headers, next: { revalidate: 3600 } })
+      const res = await fetch(PROXY_URL, { headers, next: { revalidate: 3600 } })
       if (!res.ok) {
-        console.error(`[blog] feed fetch attempt ${attempt} returned status ${res.status}`)
+        console.error(`[blog] proxy attempt ${attempt} returned status ${res.status}`)
       } else {
-        const xml = await res.text()
-        const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? []
-        if (items.length > 0) {
-          return items.slice(0, 10).map((item) => {
-            const content = pickTag(item, 'content:encoded')
+        const data = (await res.json()) as { status?: string; items?: ProxyItem[] }
+        if (data.status !== 'ok') {
+          console.error(`[blog] proxy attempt ${attempt} returned status field "${data.status}"`)
+        } else if (!data.items || data.items.length === 0) {
+          console.error(`[blog] proxy attempt ${attempt} returned 0 items`)
+        } else {
+          return data.items.slice(0, 10).map((item) => {
+            const content = item.content ?? ''
             return {
-              title: pickTag(item, 'title'),
-              link: pickTag(item, 'link'),
-              date: pickTag(item, 'pubDate'),
-              excerpt: buildExcerpt(content, pickTag(item, 'description')),
-              image: pickEnclosureImage(item) || firstBodyImage(content),
+              title: item.title ?? '',
+              link: item.link ?? '',
+              date: item.pubDate ?? '',
+              excerpt: buildExcerpt(content, item.description ?? ''),
+              image: item.thumbnail || firstBodyImage(content),
               readTime: readTimeMin(content),
             }
           })
         }
-        console.error(`[blog] feed fetch attempt ${attempt} returned 0 items (response length ${xml.length})`)
       }
     } catch (err) {
-      console.error(`[blog] feed fetch attempt ${attempt} threw:`, err)
+      console.error(`[blog] proxy attempt ${attempt} threw:`, err)
     }
     if (attempt < MAX_ATTEMPTS) {
       await new Promise((r) => setTimeout(r, 1000 * attempt))
     }
   }
 
-  console.error('[blog] all feed fetch attempts failed; rendering empty state')
+  console.error('[blog] all proxy attempts failed; rendering empty state')
   return []
 }
 
