@@ -79,25 +79,45 @@ function fmtDate(s: string): string {
 }
 
 async function getPosts(): Promise<Post[]> {
-  try {
-    const res = await fetch(FEED_URL, { next: { revalidate: 3600 } })
-    if (!res.ok) return []
-    const xml = await res.text()
-    const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? []
-    return items.slice(0, 10).map((item) => {
-      const content = pickTag(item, 'content:encoded')
-      return {
-        title: pickTag(item, 'title'),
-        link: pickTag(item, 'link'),
-        date: pickTag(item, 'pubDate'),
-        excerpt: buildExcerpt(content, pickTag(item, 'description')),
-        image: pickEnclosureImage(item) || firstBodyImage(content),
-        readTime: readTimeMin(content),
-      }
-    })
-  } catch {
-    return []
+  const headers = {
+    'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
+    'Accept': 'application/rss+xml, application/xml;q=0.9, text/xml;q=0.8',
   }
+  const MAX_ATTEMPTS = 3
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    try {
+      const res = await fetch(FEED_URL, { headers, cache: 'no-store' })
+      if (!res.ok) {
+        console.error(`[blog] feed fetch attempt ${attempt} returned status ${res.status}`)
+      } else {
+        const xml = await res.text()
+        const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? []
+        if (items.length > 0) {
+          return items.slice(0, 10).map((item) => {
+            const content = pickTag(item, 'content:encoded')
+            return {
+              title: pickTag(item, 'title'),
+              link: pickTag(item, 'link'),
+              date: pickTag(item, 'pubDate'),
+              excerpt: buildExcerpt(content, pickTag(item, 'description')),
+              image: pickEnclosureImage(item) || firstBodyImage(content),
+              readTime: readTimeMin(content),
+            }
+          })
+        }
+        console.error(`[blog] feed fetch attempt ${attempt} returned 0 items (response length ${xml.length})`)
+      }
+    } catch (err) {
+      console.error(`[blog] feed fetch attempt ${attempt} threw:`, err)
+    }
+    if (attempt < MAX_ATTEMPTS) {
+      await new Promise((r) => setTimeout(r, 1000 * attempt))
+    }
+  }
+
+  console.error('[blog] all feed fetch attempts failed; rendering empty state')
+  return []
 }
 
 export default async function Blog() {
