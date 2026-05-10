@@ -75,7 +75,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       transition={{ duration: 2.5, ease: "easeInOut" }}
       style={{
         position: 'absolute',
-        top: position === 'top' ? '20%' : '60%',
+        top: position === 'top' ? '15%' : '55%',
         left: 0,
         right: 0,
         zIndex: 10,
@@ -108,7 +108,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       transition={{ duration: 2.5, ease: "easeInOut" }}
       style={{
         position: 'absolute',
-        top: position === 'top' ? '20%' : '60%',
+        top: position === 'top' ? '15%' : '55%',
         left: '5%',
         maxWidth: '320px',
         zIndex: 10,

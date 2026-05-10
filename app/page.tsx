@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { FloatingElements } from '../components/FloatingElements'
+import { Nav } from '../components/Nav'
 
 export default function Home() {
   return (
@@ -36,25 +36,14 @@ export default function Home() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header/Navigation */}
-        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 className="text-xl font-medium tracking-tight">
-              <Link href="/">Niclas Griesshaber</Link>
-            </h1>
-            <div className="space-x-4 md:space-x-8">
-              <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
-              <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
-            </div>
-          </div>
-        </nav>
+        <Nav />
 
         {/* Hero Section */}
         <div className="max-w-7xl mx-auto px-6 pt-8">
           <div className="flex flex-col items-center">
             {/* Title above image */}
             <h2 className="text-base md:text-4xl font-light mb-4 md:mb-8 tracking-tight text-center">
-              I am a researcher in Economic History and AI
+              I research AI for History
             </h2>
 
             {/* Main content with animations - grid to avoid overlap */}
@@ -89,16 +78,61 @@ export default function Home() {
             </div>
             
             {/* Contact Section */}
-            <div className="mb-8 md:mb-16">
-              <p className="text-base md:text-xl text-gray-700 font-light text-center px-4">
-                Feel free to reach out at{' '}
-                <a 
+            <div className="mb-8 md:mb-16 px-4 w-full max-w-[500px]">
+              <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+                <div className="flex items-center gap-5">
+                  <a
+                    href="https://www.linkedin.com/in/niclasgriesshaber/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="text-[#0A66C2] hover:opacity-80 transition-opacity"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://substack.com/@aieconhistory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Substack"
+                    className="text-[#FF6719] hover:opacity-80 transition-opacity"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://x.com/aieconhistory"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="X (Twitter)"
+                    className="text-black hover:opacity-80 transition-opacity"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
+                    </svg>
+                  </a>
+                  <a
+                    href="https://github.com/niclasgriesshaber"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="GitHub"
+                    className="text-black hover:opacity-80 transition-opacity"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                    </svg>
+                  </a>
+                </div>
+                <a
                   href="mailto:niclasgriesshaber@outlook.com"
-                  className="text-black hover:text-gray-600 transition-colors border-b border-black/20 hover:border-gray-600"
+                  className="text-gray-700 hover:text-black transition-colors text-sm md:text-base border-b border-black/20 hover:border-gray-600"
                 >
                   niclasgriesshaber@outlook.com
                 </a>
-              </p>
+              </div>
             </div>
           </div>
         </div>

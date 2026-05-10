@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { Nav } from '../../components/Nav'
 
 export const metadata: Metadata = {
   title: 'Research - Niclas Griesshaber',
@@ -40,87 +41,123 @@ export default function Research() {
 
       {/* Content */}
       <div className="relative z-10">
-        {/* Header/Navigation */}
-        <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <h1 className="text-xl font-medium tracking-tight">
-              <Link href="/">Niclas Griesshaber</Link>
-            </h1>
-            <div className="space-x-4 md:space-x-8">
-              <Link href="/research" className="text-sm font-medium hover:text-gray-600 transition-colors">RESEARCH</Link>
-              <Link href="/cv" className="text-sm font-medium hover:text-gray-600 transition-colors">CV</Link>
-            </div>
-          </div>
-        </nav>
+        <Nav />
 
         {/* Research Content */}
         <div className="max-w-4xl mx-auto px-6 pt-8 pb-24">
           {/* Vision Statement */}
-          <div className="mb-12 space-y-6">
-            <div className="space-y-4">
-              <p className="text-gray-800 text-justify leading-relaxed">
-                Multimodal large language models enable us to build historical datasets from archival image scans on demand. Using new microlevel data, my research investigates how innovation and institutions shaped labour markets and economic growth in Germany during the Industrial Revolution.
-              </p>
+          <div className="mb-10 space-y-4">
+            <p className="text-gray-800 text-justify leading-relaxed">
+              I build large-scale historical datasets from archival image scans using multimodal large language models to study how individuals, firms, and cities interacted with the German patent system and responded to technological change during the Second Industrial Revolution.
+            </p>
 
-              <p className="text-gray-800 text-justify leading-relaxed">
-                In the long term, I aim to build AI Economic Historians: AI agents that scrape digital archives for image scans, turn them into structured datasets, link these to publicly accessible ones, and then analyse the merged dataset quantitatively. This abundance of data may also allow us to model historical economies as complex systems, with{' '}
-                <a 
-                  href="https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-600 transition-colors"
-                >
-                  world models
-                </a>
-                {' '}grounded in the surviving primary sources.
-              </p>
-            </div>
+            <p className="text-gray-800 text-justify leading-relaxed">
+              Alongside this work, I develop AI Co-Historians in AI for History (AI4History) to support historical research workflows and help historians analyse millions of previously unread primary sources. My goal is to accelerate historical research while giving historians more agency and leverage in understanding our past.
+            </p>
           </div>
 
           {/* Papers */}
           <section>
-            <h2 className="text-2xl font-medium mb-3 tracking-tight border-b pb-2">
-              Papers
-            </h2>
+            <div className="mb-5">
+              <h2 className="text-xl font-medium tracking-tight">Papers</h2>
+              <p className="text-sm text-gray-500 italic mt-1">
+                Joint work with equal contribution.
+              </p>
+            </div>
             <div className="space-y-6">
+              {/* Chronos: The AI Co-Historian */}
+              <div>
+                <h3 className="text-base font-medium leading-snug">
+                  <Link
+                    href="https://arxiv.org/abs/2604.03553"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-900 hover:text-blue-600 transition-colors"
+                  >
+                    Chronos: The AI Co-Historian
+                  </Link>
+                </h3>
+                <p className="text-gray-600 text-sm mt-1">
+                  <span className="italic">with </span>
+                  <Link
+                    href="https://hufe.info"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Lorenz Hufe
+                  </Link>
+                  , Gavin Greif, Sebastian Oliver Eck, and{' '}
+                  <Link
+                    href="https://ai2050.schmidtsciences.org/fellow/philip-torr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Philip Torr
+                  </Link>
+                </p>
+              </div>
+
               {/* German Patents paper */}
-              <div className="p-4 -mx-4">
-                <h3 className="text-xl font-light mb-2 leading-relaxed">
-                  <Link href="https://arxiv.org/abs/2512.19675" target="_blank" rel="noopener noreferrer">
+              <div>
+                <h3 className="text-base font-medium leading-snug">
+                  <Link
+                    href="https://arxiv.org/abs/2512.19675"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-900 hover:text-blue-600 transition-colors"
+                  >
                     Multimodal LLMs for Historical Dataset Construction from Archival Image Scans: German Patents (1877-1918)
                   </Link>
                 </h3>
-                <p className="text-gray-600 text-base">
+                <p className="text-gray-600 text-sm mt-1">
                   <span className="italic">with </span>
-                  <Link href="https://www.vwl.uni-mannheim.de/streb/team/prof-dr-streb" className="text-blue-500 hover:text-blue-600 transition-colors">
+                  <Link
+                    href="https://www.vwl.uni-mannheim.de/streb/team/prof-dr-streb"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
                     Jochen Streb
                   </Link>
                 </p>
               </div>
 
               {/* ArXiv paper with link */}
-              <div className="p-4 -mx-4">
-                <h3 className="text-xl font-light mb-2 leading-relaxed">
-                  <Link href="https://arxiv.org/abs/2504.00414" target="_blank" rel="noopener noreferrer">
+              <div>
+                <h3 className="text-base font-medium leading-snug">
+                  <Link
+                    href="https://arxiv.org/abs/2504.00414"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-900 hover:text-blue-600 transition-colors"
+                  >
                     Multimodal LLMs for OCR, OCR Post-Correction, and NER in Historical Documents
                   </Link>
                 </h3>
-                <p className="text-gray-600 text-base">
+                <p className="text-gray-600 text-sm mt-1">
                   <span className="italic">with </span>
                   Gavin Greif and Robin Greif
                 </p>
               </div>
 
               {/* Sheilagh paper */}
-              <div className="p-4 -mx-4">
-                <h3 className="text-xl font-light mb-2 leading-relaxed">
-                  <Link href="https://cepr.org/publications/dp20556" target="_blank" rel="noopener noreferrer">
+              <div>
+                <h3 className="text-base font-medium leading-snug">
+                  <Link
+                    href="https://cepr.org/publications/dp20556"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-900 hover:text-blue-600 transition-colors"
+                  >
                     Transplanting Craft Guilds to Colonial Latin America: A Large Language Model Analysis
                   </Link>
                 </h3>
-                <p className="text-gray-600 text-base">
+                <p className="text-gray-600 text-sm mt-1">
                   <span className="italic">with </span>
-                  <Link href="https://www.sheilaghogilvie.com/" className="text-blue-500 hover:text-blue-600 transition-colors">
+                  <Link
+                    href="https://www.sheilaghogilvie.com/"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
                     Sheilagh Ogilvie
                   </Link>
                 </p>

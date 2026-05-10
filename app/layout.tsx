@@ -5,8 +5,31 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://niclasgriesshaber.com"),
   title: "Niclas Griesshaber",
-  description: "I am a researcher in Economic History and Machine Learning.",
+  description: "AI for History",
+  openGraph: {
+    title: "Niclas Griesshaber",
+    description: "AI for History",
+    url: "/",
+    siteName: "Niclas Griesshaber",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Niclas Griesshaber",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Niclas Griesshaber",
+    description: "AI for History",
+    images: ["/og-image.jpg"],
+  },
   icons: {
     icon: [
       {
