@@ -52,7 +52,16 @@ export default function Research() {
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              Alongside this work, I develop AI Co-Historians in AI for History (AI4History) to support historical research workflows and help historians analyse millions of previously unread primary sources. My goal is to accelerate historical research while giving historians more agency and leverage in understanding our past.
+              Alongside this work, I develop{' '}
+              <Link
+                href="https://ai-historian.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 hover:text-blue-600 transition-colors"
+              >
+                AI Co-Historians
+              </Link>
+              {' '}in AI for History (AI4History) to support historical research workflows and help historians analyse millions of previously unread primary sources. My goal is to accelerate historical research while giving historians more agency and leverage in understanding our past.
             </p>
           </div>
 
