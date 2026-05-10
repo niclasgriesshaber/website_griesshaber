@@ -42,7 +42,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 pt-8">
           <div className="flex flex-col items-center">
             {/* Title above image */}
-            <h2 className="text-base md:text-4xl font-light mb-4 md:mb-8 tracking-tight text-center">
+            <h2 className="text-xl md:text-4xl font-light mb-4 md:mb-8 tracking-tight text-center">
               I research AI for History
             </h2>
 
