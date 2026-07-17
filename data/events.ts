@@ -17,6 +17,12 @@ export const upcoming: Event[] = [
     type: 'Workshop',
   },
   {
+    title: 'AI in the Historical Humanities and Social Sciences',
+    venue: 'University of Regensburg, Germany',
+    date: 'November 6–8, 2026',
+    type: 'Workshop',
+  },
+  {
     title: 'Digital History',
     venue: 'Berlin, Germany',
     date: 'November 11, 2026',
@@ -27,12 +33,6 @@ export const upcoming: Event[] = [
     venue: 'Diocese of Kreuzlingen, Switzerland',
     date: 'November 16, 2026',
     type: 'Presentation',
-  },
-  {
-    title: 'AI in the Historical Humanities and Social Sciences',
-    venue: 'University of Regensburg, Germany',
-    date: 'Date TBA',
-    type: 'Workshop',
   },
   {
     title: 'AI for History',
