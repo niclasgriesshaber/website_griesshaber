@@ -144,7 +144,7 @@ export default function Research() {
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1913. This also offers an AI for Science angle, the{' '}
+              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1911. This also offers an AI for Science angle, the{' '}
               <A href="https://time.com/7277608/demis-hassabis-interview-time100-2025/">
                 Hassabis AGI Einstein Test
               </A>
