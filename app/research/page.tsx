@@ -140,20 +140,25 @@ export default function Research() {
           {/* Vision Statement */}
           <div className="mb-10 space-y-4">
             <p className="text-gray-800 text-justify leading-relaxed">
-              I build large-scale historical datasets from archival image scans using multimodal large language models to study how individuals, firms, and cities interacted with the German patent system and responded to technological change during the Second Industrial Revolution.
+              I research AI for History and Economic History. My work focuses on using AI to build large-scale historical datasets from primary-source PDFs to study how institutions shaped patenting in Germany&apos;s Second Industrial Revolution.
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              Alongside this work, I develop{' '}
-              <Link
-                href="https://ai-historian.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:text-blue-600 transition-colors"
-              >
-                AI Co-Historians
-              </Link>
-              {' '}in AI for History (AI4History) to support historical research workflows and help historians analyse millions of previously unread primary sources. My goal is to accelerate historical research while giving historians more agency and leverage in understanding our past.
+              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1913. This also offers an AI for Science angle, the{' '}
+              <A href="https://time.com/7277608/demis-hassabis-interview-time100-2025/">
+                Hassabis AGI Einstein Test
+              </A>
+              : can AI discover relativity with the information available to Einstein at the time?
+            </p>
+
+            <p className="text-gray-800 text-justify leading-relaxed">
+              My long-term vision is to advance AI Co-Historians that help historians analyse the vast archival collections still largely unread by humans, contributing to a golden age of historical discovery. As this may become reality, I am also interested in how AI alignment will shape how models read and interpret these primary sources.
+            </p>
+
+            <p className="text-gray-800 text-justify leading-relaxed">
+              My work is supported by a EUR 65,000 NFDI4Memory Incubator Grant, on which I serve as Co-PI. I am a founding member of Philip Torr&apos;s{' '}
+              <A href="https://ai-historian.com">AI for History Team</A>, which is supported by{' '}
+              <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Schmidt Sciences</A>.
             </p>
           </div>
 
