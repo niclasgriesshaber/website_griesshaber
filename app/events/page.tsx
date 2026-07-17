@@ -78,44 +78,51 @@ export default function Events() {
                       {year === 'Other' ? 'Date TBA' : year}
                     </h3>
                     <ul className="divide-y divide-gray-200/70">
-                      {items.map((e, i) => (
-                        <li
-                          key={i}
-                          className="py-3 flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm"
-                        >
-                          {year !== 'Other' && (
-                            <span className="md:w-36 flex-shrink-0 text-xs uppercase tracking-wider text-gray-500 font-medium">
-                              {stripYear(e.date)}
+                      {items.map((e, i) => {
+                        const inner = (
+                          <>
+                            {year !== 'Other' && (
+                              <span className="md:w-36 flex-shrink-0 text-xs uppercase tracking-wider text-gray-500 font-medium">
+                                {stripYear(e.date)}
+                              </span>
+                            )}
+                            <span className="md:w-28 flex-shrink-0 text-[10px] uppercase tracking-wider text-gray-500 font-semibold mt-0.5 md:mt-0">
+                              {e.type}
                             </span>
-                          )}
-                          <span className="md:w-28 flex-shrink-0 text-[10px] uppercase tracking-wider text-gray-500 font-semibold mt-0.5 md:mt-0">
-                            {e.type}
-                          </span>
-                          <div className="flex-1 min-w-0 leading-snug mt-0.5 md:mt-0">
-                            <p>
-                              <span className="font-medium text-gray-900">{e.title}</span>
-                              {e.note && (
-                                <span className="text-gray-400 italic"> &middot; {e.note}</span>
-                              )}
-                            </p>
-                            {e.venue && (
-                              <p className="text-gray-600">{e.venue}</p>
-                            )}
-                            {e.link && (
-                              <p className="mt-0.5">
-                                <Link
-                                  href={e.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-blue-500 hover:text-blue-600 transition-colors"
-                                >
-                                  Register &rarr;
-                                </Link>
+                            <div className="flex-1 min-w-0 leading-snug mt-0.5 md:mt-0">
+                              <p>
+                                <span className="font-medium text-gray-900 transition-colors group-hover:text-blue-600">
+                                  {e.title}
+                                </span>
+                                {e.note && (
+                                  <span className="text-gray-400 italic"> &middot; {e.note}</span>
+                                )}
                               </p>
+                              {e.venue && (
+                                <p className="text-gray-600">{e.venue}</p>
+                              )}
+                            </div>
+                          </>
+                        )
+                        return (
+                          <li key={i}>
+                            {e.link ? (
+                              <Link
+                                href={e.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group py-3 -mx-3 px-3 rounded-lg flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm transition-colors hover:bg-blue-50/70"
+                              >
+                                {inner}
+                              </Link>
+                            ) : (
+                              <div className="py-3 flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm">
+                                {inner}
+                              </div>
                             )}
-                          </div>
-                        </li>
-                      ))}
+                          </li>
+                        )
+                      })}
                     </ul>
                   </div>
                 ))}
@@ -133,40 +140,46 @@ export default function Events() {
                       {year}
                     </h3>
                     <ul className="divide-y divide-gray-200/70">
-                      {items.map((e, i) => (
-                        <li
-                          key={i}
-                          className="py-2.5 flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm"
-                        >
-                          <span className="md:w-28 flex-shrink-0 text-[10px] uppercase tracking-wider text-gray-500 font-semibold mt-0.5 md:mt-0">
-                            {e.type}
-                          </span>
-                          <div className="flex-1 min-w-0 leading-snug mt-0.5 md:mt-0">
-                            <p>
-                              {e.link ? (
-                                <Link
-                                  href={e.link}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
-                                >
-                                  {e.title}
-                                </Link>
-                              ) : (
-                                <span className="font-medium text-gray-900">
+                      {items.map((e, i) => {
+                        const inner = (
+                          <>
+                            <span className="md:w-28 flex-shrink-0 text-[10px] uppercase tracking-wider text-gray-500 font-semibold mt-0.5 md:mt-0">
+                              {e.type}
+                            </span>
+                            <div className="flex-1 min-w-0 leading-snug mt-0.5 md:mt-0">
+                              <p>
+                                <span className="font-medium text-gray-900 transition-colors group-hover:text-blue-600">
                                   {e.title}
                                 </span>
+                                {e.note && (
+                                  <span className="text-gray-400 italic"> &middot; {e.note}</span>
+                                )}
+                              </p>
+                              {e.venue && (
+                                <p className="text-gray-600">{e.venue}</p>
                               )}
-                              {e.note && (
-                                <span className="text-gray-400 italic"> &middot; {e.note}</span>
-                              )}
-                            </p>
-                            {e.venue && (
-                              <p className="text-gray-600">{e.venue}</p>
+                            </div>
+                          </>
+                        )
+                        return (
+                          <li key={i}>
+                            {e.link ? (
+                              <Link
+                                href={e.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group py-2.5 -mx-3 px-3 rounded-lg flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm transition-colors hover:bg-blue-50/70"
+                              >
+                                {inner}
+                              </Link>
+                            ) : (
+                              <div className="py-2.5 flex flex-col md:flex-row md:gap-4 md:items-baseline text-sm">
+                                {inner}
+                              </div>
                             )}
-                          </div>
-                        </li>
-                      ))}
+                          </li>
+                        )
+                      })}
                     </ul>
                   </div>
                 ))}

@@ -55,12 +55,14 @@ export const past: Event[] = [
     venue: 'Aarhus University, Denmark',
     date: '2026',
     type: 'Workshop',
+    link: 'https://cas.au.dk/en/cedhar/events/show/artikel/ai-assisted-reading-of-historical-archives-with-niclas-griesshaber',
   },
   {
     title: 'Computational History',
     venue: 'Warwick University, UK',
     date: '2026',
     type: 'Presentation',
+    link: 'https://warwick.ac.uk/fac/soc/economics/research/centres/cage/events/08-05-26-computational_history_workshop/',
   },
   {
     title: 'OxDSS × TVG: AI for Digital Scholarship Workshop',
@@ -80,12 +82,14 @@ export const past: Event[] = [
     venue: 'Oxford e-Research Centre, UK',
     date: '2026',
     type: 'Presentation',
+    link: 'https://www.linkedin.com/posts/dr-badran-m-e-65414b113_aiagents-claudecode-codex-activity-7463695117170720768--UBy',
   },
   {
     title: 'Beyond Automation: Artificial Intelligence and the Interpretive Traditions of the Humanities',
     venue: 'Oxford e-Research Centre, UK',
     date: '2026',
     type: 'Panel',
+    link: 'https://www.linkedin.com/posts/activity-7441612197698355201-GOOx',
   },
   {
     title: 'The Oxford, Warwick and LSE Workshop in Economic History',
@@ -110,17 +114,13 @@ export const past: Event[] = [
     venue: 'Lund University, Sweden',
     date: '2025',
     type: 'Presentation',
-  },
-  {
-    title: 'Microdata in Economic History: Beyond the Full-Count Census',
-    venue: 'LMU, Germany',
-    date: '2024',
-    type: 'Presentation',
+    link: 'https://wehc2025.com/WEHC_Conference_Program_2025_v3.pdf',
   },
   {
     title: 'Joan Thirsk Dissertation Prize Lecture',
     venue: 'All Souls College, UK',
     date: '2024',
     type: 'Lecture',
+    link: 'https://x.com/OxfordESH/status/1782853296878760116',
   },
 ]
