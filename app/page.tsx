@@ -57,7 +57,7 @@ export default function Home() {
               </div>
 
               {/* Image Container - responsive size and constrained to center track */}
-              <div className="relative justify-self-center w-full max-w-[500px] aspect-square rounded-2xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-[1.01] z-20">
+              <div className="relative justify-self-center w-full max-w-[500px] aspect-square rounded-2xl overflow-hidden bg-blue-100/60 shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-[1.01] z-20">
                 <Image
                   src="/griesshaber.jpg"
                   alt="Niclas Griesshaber"
