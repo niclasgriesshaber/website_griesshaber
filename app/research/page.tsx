@@ -56,6 +56,7 @@ const papers: Paper[] = [
         <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Philip Torr</A>
       </>
     ),
+    action: { label: 'Download Chronos', href: 'https://github.com/ai-historian/chronos' },
     abstract:
       'AI is increasingly supporting, accelerating, and automating scientific discovery across subjects. Yet, the adoption of AI in historical research remains limited due to the lack of specialised solutions for historians. To change this, we introduce Chronos, an AI Co-Historian designed to support historians. It allows researchers to create and customize research workflows through natural-language interaction and share these as Chronos-Extensions with others. Chronos specifically addresses the need of historians for a tool that is specialised, non-technical, highly customizable, and facilitates extensive task evaluation. As a first extension, we introduce Chronos-Extract, which enables researchers to automate the targeted extraction of information from image scans of historical sources. We benchmark Chronos-Extract on three historical source corpora and find that it achieves high task-accuracy across primary sources spanning three centuries and diverse languages, layouts, and typefaces. Chronos is openly available and ready for historians to use on their own primary and secondary sources.',
   },
