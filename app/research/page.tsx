@@ -156,7 +156,8 @@ export default function Research() {
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              My work is supported by a EUR 65,000 NFDI4Memory Incubator Grant, on which I serve as Co-PI. I am a founding member of Philip Torr&apos;s{' '}
+              My work is supported by a EUR 65,000{' '}
+              <A href="https://4memory.de/aktivitaeten/incubator-funds/">NFDI4Memory Incubator Grant</A>, on which I serve as Co-PI. I am a founding member of Philip Torr&apos;s{' '}
               <A href="https://ai-historian.com">AI for History Team</A>, which is supported by{' '}
               <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Schmidt Sciences</A>.
             </p>
@@ -166,7 +167,6 @@ export default function Research() {
           <section>
             <div className="mb-5">
               <h2 className="text-xl font-medium tracking-tight">Papers</h2>
-              <p className="text-sm text-gray-500 italic mt-1">*Equal contribution.</p>
             </div>
             <div className="space-y-6">
               {papers.map((p) => (
