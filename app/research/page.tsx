@@ -8,10 +8,6 @@ export const metadata: Metadata = {
   description: 'Research',
 }
 
-function Me() {
-  return <span className="font-semibold text-gray-900">Niclas Griesshaber</span>
-}
-
 function A({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
@@ -56,7 +52,7 @@ const papers: Paper[] = [
     link: 'https://arxiv.org/abs/2604.03553',
     authors: (
       <>
-        <A href="https://hufe.info">Lorenz Hufe</A>, <Me />, Gavin Greif, Sebastian Oliver Eck, and{' '}
+        <A href="https://hufe.info">Lorenz Hufe</A>, Niclas Griesshaber*, Gavin Greif*, Sebastian Oliver Eck, and{' '}
         <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Philip Torr</A>
       </>
     ),
@@ -70,7 +66,7 @@ const papers: Paper[] = [
     link: 'https://arxiv.org/abs/2512.19675',
     authors: (
       <>
-        <Me /> and <A href="https://www.vwl.uni-mannheim.de/streb/team/prof-dr-streb">Jochen Streb</A>
+        Niclas Griesshaber and <A href="https://www.vwl.uni-mannheim.de/streb/team/prof-dr-streb">Jochen Streb</A>
       </>
     ),
     venue: 'Forthcoming in Vierteljahrschrift für Sozial- und Wirtschaftsgeschichte',
@@ -82,7 +78,7 @@ const papers: Paper[] = [
     link: 'https://arxiv.org/abs/2504.00414',
     authors: (
       <>
-        Gavin Greif, <Me />, and Robin Greif
+        Gavin Greif, Niclas Griesshaber, and Robin Greif
       </>
     ),
     venue: 'Forthcoming in Economic History Yearbook',
@@ -94,7 +90,7 @@ const papers: Paper[] = [
     link: 'https://cepr.org/publications/dp20556',
     authors: (
       <>
-        <Me /> and <A href="https://www.sheilaghogilvie.com/">Sheilagh Ogilvie</A>
+        Niclas Griesshaber and <A href="https://www.sheilaghogilvie.com/">Sheilagh Ogilvie</A>
       </>
     ),
     venue: 'CEPR Discussion Paper',
@@ -165,6 +161,7 @@ export default function Research() {
           <section>
             <div className="mb-5">
               <h2 className="text-xl font-medium tracking-tight">Papers</h2>
+              <p className="text-sm text-gray-500 italic mt-1">*Equal contribution.</p>
             </div>
             <div className="space-y-6">
               {papers.map((p) => (
