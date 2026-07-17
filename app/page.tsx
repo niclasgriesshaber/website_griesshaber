@@ -104,7 +104,7 @@ export default function Home() {
                     </svg>
                   </a>
                   <a
-                    href="https://x.com/aieconhistory"
+                    href="https://x.com/n_griesshaber"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="X (Twitter)"
