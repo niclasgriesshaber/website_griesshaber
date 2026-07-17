@@ -52,7 +52,8 @@ const papers: Paper[] = [
     link: 'https://arxiv.org/abs/2604.03553',
     authors: (
       <>
-        <A href="https://hufe.info">Lorenz Hufe</A>, Niclas Griesshaber*, Gavin Greif*, Sebastian Oliver Eck, and{' '}
+        <A href="https://hufe.info">Lorenz Hufe</A>, Niclas Griesshaber*, Gavin Greif*,{' '}
+        <A href="https://www.humanities.ox.ac.uk/people/sebastian-oliver-eck">Sebastian Oliver Eck</A>, and{' '}
         <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Philip Torr</A>
       </>
     ),
@@ -78,7 +79,7 @@ const papers: Paper[] = [
     link: 'https://arxiv.org/abs/2504.00414',
     authors: (
       <>
-        Gavin Greif, Niclas Griesshaber, and Robin Greif
+        Gavin Greif, Niclas Griesshaber*, and Robin Greif
       </>
     ),
     venue: 'Forthcoming in Economic History Yearbook',
@@ -144,7 +145,7 @@ export default function Research() {
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1911. This also offers an AI for Science angle, the{' '}
+              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1911. This also offers an AI for Science angle with the{' '}
               <A href="https://time.com/7277608/demis-hassabis-interview-time100-2025/">
                 Hassabis AGI Einstein Test
               </A>
