@@ -27,6 +27,7 @@ type Paper = {
   authors: ReactNode
   venue?: string
   abstract?: string
+  action?: { label: string; href: string }
 }
 
 const papers: Paper[] = [
@@ -42,6 +43,7 @@ const papers: Paper[] = [
         <A href="https://yaolu.github.io">Yao Lu</A>
       </>
     ),
+    action: { label: 'Try the History LLM', href: 'https://typewriter.chat' },
     abstract:
       'We introduce TypewriterLM, a 7.24B History language model (LM) trained exclusively on English text predating 1913. Developing History LMs requires addressing challenges in data quality and availability, preventing temporal leakage, designing temporally consistent post-training pipelines, and constructing reliable evaluations. To address these issues, we construct TypewriterCorpus, a 54B-token historical corpus collected from diverse archival and linguistically annotated sources with extensive data cleaning and leakage mitigation procedures. Furthermore, we introduce lexically grounded instructing tuning, a post-training framework that constraints responses to remain directly grounded in historical source documents. Using this framework we construct two historical instruction tuning datasets: History-LIMA and History-SelfInstruct. To evaluate capability and temporal consistency, we introduce History-Event, a benchmark suite for evaluating competence, temporal grounding and data leakage. We release TypewriterLM and all associated resources to support future research on historical language models.',
   },
@@ -176,22 +178,37 @@ export default function Research() {
                     <p className="text-gray-500 text-sm italic mt-0.5">{p.venue}</p>
                   )}
                   {p.abstract && (
-                    <details className="group mt-1.5">
-                      <summary className="inline-flex items-center gap-1.5 cursor-pointer select-none text-sm text-blue-500 hover:text-blue-600 transition-colors list-none [&::-webkit-details-marker]:hidden">
-                        <svg
-                          className="w-2.5 h-2.5 transition-transform duration-200 group-open:rotate-90"
-                          viewBox="0 0 16 16"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path d="M5.5 3.5 L11 8 L5.5 12.5 Z" />
-                        </svg>
-                        Abstract
-                      </summary>
-                      <p className="mt-2 text-sm text-gray-700 leading-relaxed text-justify">
-                        {p.abstract}
-                      </p>
-                    </details>
+                    <div className="mt-1.5 flex items-baseline gap-2">
+                      <details className="group min-w-0">
+                        <summary className="inline-flex items-center gap-1.5 cursor-pointer select-none text-sm text-gray-600 hover:text-gray-900 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                          <svg
+                            className="w-3 h-3 flex-shrink-0 transition-transform duration-200 group-open:rotate-90"
+                            viewBox="0 0 16 16"
+                            fill="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path d="M5 3 L11.5 8 L5 13 Z" />
+                          </svg>
+                          Abstract
+                        </summary>
+                        <p className="mt-2 text-sm text-gray-700 leading-relaxed text-justify">
+                          {p.abstract}
+                        </p>
+                      </details>
+                      {p.action && (
+                        <>
+                          <span className="text-gray-400 text-sm">&middot;</span>
+                          <Link
+                            href={p.action.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-500 hover:text-blue-600 transition-colors whitespace-nowrap"
+                          >
+                            {p.action.label}
+                          </Link>
+                        </>
+                      )}
+                    </div>
                   )}
                 </div>
               ))}

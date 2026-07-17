@@ -86,7 +86,7 @@ export default function Data() {
                         rel="noopener noreferrer"
                         className="text-sm text-blue-500 hover:text-blue-600 transition-colors"
                       >
-                        Explore on historymind.ai &rarr;
+                        Download on historymind.ai &rarr;
                       </Link>
                     </p>
                   </li>
