@@ -152,7 +152,7 @@ export default function Research() {
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              My long-term vision is to advance AI Co-Historians that help historians analyse the vast archival collections still largely unread by humans, contributing to a golden age of historical discovery. As this may become reality, I am also interested in how AI alignment will shape how models read and interpret these primary sources.
+              In the long term, I aim to advance AI Co-Historians that help historians analyse the vast archival collections still largely unread by humans, contributing to a golden age of historical discovery. As this may become reality, I am also interested in how AI alignment will shape how models read and interpret historical documents.
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
