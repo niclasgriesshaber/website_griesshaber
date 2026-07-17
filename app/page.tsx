@@ -93,7 +93,7 @@ export default function Home() {
                     </svg>
                   </a>
                   <a
-                    href="https://substack.com/@aieconhistory"
+                    href="https://substack.com/@niclasgriesshaber"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Substack"

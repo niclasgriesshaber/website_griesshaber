@@ -17,7 +17,7 @@ type Post = {
 }
 
 const FEED_URL = 'https://aieconhistory.substack.com/feed'
-const SUBSTACK_URL = 'https://aieconhistory.substack.com'
+const SUBSTACK_URL = 'https://substack.com/@niclasgriesshaber'
 // Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
 // detection), so we proxy through rss2json. Their free tier serves up to
 // 10k requests/day; we use ~1/build, with a daily cron rebuild.
@@ -169,7 +169,7 @@ export default async function Blog() {
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-600 transition-colors"
                 >
-                  aieconhistory.substack.com
+                  substack.com/@niclasgriesshaber
                 </Link>
                 .
               </p>
