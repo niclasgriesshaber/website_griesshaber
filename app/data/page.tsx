@@ -45,17 +45,7 @@ export default function Data() {
 
         <div className="max-w-4xl mx-auto px-6 pt-8 pb-24">
           <section>
-            <div className="flex items-baseline justify-between mb-5">
-              <h2 className="text-xl font-medium tracking-tight">Data</h2>
-              <Link
-                href={PLATFORM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-gray-500 hover:text-black transition-colors"
-              >
-                historymind.ai &rarr;
-              </Link>
-            </div>
+            <h2 className="text-xl font-medium tracking-tight mb-5">Data</h2>
 
             {datasets.length === 0 ? (
               <p className="text-gray-700">

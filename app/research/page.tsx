@@ -69,11 +69,61 @@ export default function Research() {
           <section>
             <div className="mb-5">
               <h2 className="text-xl font-medium tracking-tight">Papers</h2>
-              <p className="text-sm text-gray-500 italic mt-1">
-                Joint work with equal contribution.
-              </p>
             </div>
             <div className="space-y-6">
+              {/* Pretraining Language Models on Historical Text */}
+              <div>
+                <h3 className="text-base font-medium leading-snug">
+                  <Link
+                    href="https://arxiv.org/abs/2606.02991"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-900 hover:text-blue-600 transition-colors"
+                  >
+                    Pretraining Language Models on Historical Text
+                  </Link>
+                </h3>
+                <p className="text-gray-600 text-sm mt-1">
+                  <span className="italic">with </span>
+                  Xiaoxi Luo,{' '}
+                  <Link
+                    href="https://zlshinnick.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Zachary Shinnick
+                  </Link>
+                  , Yixuan Wang, Junchi Yu,{' '}
+                  <Link
+                    href="https://cs.uwaterloo.ca/~fhs/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Freda Shi
+                  </Link>
+                  ,{' '}
+                  <Link
+                    href="https://ai2050.schmidtsciences.org/fellow/philip-torr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Philip Torr
+                  </Link>
+                  , and{' '}
+                  <Link
+                    href="https://yaolu.github.io"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 transition-colors"
+                  >
+                    Yao Lu
+                  </Link>
+                </p>
+              </div>
+
               {/* Chronos: The AI Co-Historian */}
               <div>
                 <h3 className="text-base font-medium leading-snug">
