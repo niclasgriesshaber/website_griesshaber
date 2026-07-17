@@ -41,7 +41,7 @@ const papers: Paper[] = [
     authors: (
       <>
         Xiaoxi Luo, <A href="https://zlshinnick.github.io">Zachary Shinnick</A>,{' '}
-        <Me />, Yixuan Wang, <A href="https://samyu0304.github.io">Junchi Yu</A>,{' '}
+        Niclas Griesshaber, Yixuan Wang, <A href="https://samyu0304.github.io">Junchi Yu</A>,{' '}
         <A href="https://cs.uwaterloo.ca/~fhs/">Freda Shi</A>,{' '}
         <A href="https://ai2050.schmidtsciences.org/fellow/philip-torr/">Philip Torr</A>, and{' '}
         <A href="https://yaolu.github.io">Yao Lu</A>
