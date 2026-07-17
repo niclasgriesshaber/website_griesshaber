@@ -158,17 +158,7 @@ export default async function Blog() {
 
         <div className="max-w-4xl mx-auto px-6 pt-8 pb-24">
           <section>
-            <div className="flex items-baseline justify-between mb-5">
-              <h2 className="text-xl font-medium tracking-tight">Blog</h2>
-              <Link
-                href={SUBSTACK_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-gray-500 hover:text-black transition-colors"
-              >
-                Subscribe on Substack &rarr;
-              </Link>
-            </div>
+            <h2 className="text-xl font-medium tracking-tight mb-5">Blog</h2>
 
             {posts.length === 0 ? (
               <p className="text-gray-700">
