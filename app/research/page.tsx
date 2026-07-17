@@ -178,9 +178,9 @@ export default function Research() {
                     <p className="text-gray-500 text-sm italic mt-0.5">{p.venue}</p>
                   )}
                   {p.abstract && (
-                    <div className="mt-1.5 flex items-baseline gap-2">
-                      <details className="group min-w-0">
-                        <summary className="inline-flex items-center gap-1.5 cursor-pointer select-none text-sm text-gray-600 hover:text-gray-900 transition-colors list-none [&::-webkit-details-marker]:hidden">
+                    <details className="group mt-1.5">
+                      <summary className="flex items-baseline gap-2 cursor-pointer select-none list-none [&::-webkit-details-marker]:hidden">
+                        <span className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 transition-colors">
                           <svg
                             className="w-3 h-3 flex-shrink-0 transition-transform duration-200 group-open:rotate-90"
                             viewBox="0 0 16 16"
@@ -190,25 +190,25 @@ export default function Research() {
                             <path d="M5 3 L11.5 8 L5 13 Z" />
                           </svg>
                           Abstract
-                        </summary>
-                        <p className="mt-2 text-sm text-gray-700 leading-relaxed text-justify">
-                          {p.abstract}
-                        </p>
-                      </details>
-                      {p.action && (
-                        <>
-                          <span className="text-gray-400 text-sm">&middot;</span>
-                          <Link
-                            href={p.action.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-blue-500 hover:text-blue-600 transition-colors whitespace-nowrap"
-                          >
-                            {p.action.label}
-                          </Link>
-                        </>
-                      )}
-                    </div>
+                        </span>
+                        {p.action && (
+                          <>
+                            <span className="text-gray-400 text-sm">&middot;</span>
+                            <Link
+                              href={p.action.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sm text-blue-500 hover:text-blue-600 transition-colors whitespace-nowrap"
+                            >
+                              {p.action.label}
+                            </Link>
+                          </>
+                        )}
+                      </summary>
+                      <p className="mt-2 text-sm text-gray-700 leading-relaxed text-justify">
+                        {p.abstract}
+                      </p>
+                    </details>
                   )}
                 </div>
               ))}
