@@ -11,27 +11,51 @@ export type Event = {
 
 export const upcoming: Event[] = [
   {
-    title: 'AI for Digital Historical Scholarship',
-    venue: 'Aarhus University, Denmark',
-    date: 'May 12–13, 2026',
-    type: 'Workshop',
-  },
-  {
-    title: 'OxDSS × TVG: AI for Digital Scholarship Workshop',
-    venue: 'University of Oxford, UK',
-    date: 'June 3, 2026',
-    note: '2nd edition',
-    type: 'Workshop',
-  },
-  {
     title: 'Application of AI for the Digitalization and Analysis of Historical Data',
     venue: 'Public University of Navarre (UPNA), Spain',
+    date: 'September 16–17, 2026',
+    type: 'Workshop',
+  },
+  {
+    title: 'Digital History',
+    venue: 'Berlin, Germany',
+    date: 'November 11, 2026',
+    type: 'Presentation',
+  },
+  {
+    title: 'AI, History, and Ethics',
+    venue: 'Diocese of Kreuzlingen, Switzerland',
+    date: 'November 16, 2026',
+    type: 'Presentation',
+  },
+  {
+    title: 'AI in the Historical Humanities and Social Sciences',
+    venue: 'University of Regensburg, Germany',
+    date: 'Date TBA',
+    type: 'Workshop',
+  },
+  {
+    title: 'AI for History',
+    venue: 'Koç University, Istanbul, Turkey',
     date: 'Date TBA',
     type: 'Workshop',
   },
 ]
 
 export const past: Event[] = [
+  {
+    title: 'OxDSS × TVG: AI for Digital Scholarship Workshop',
+    venue: 'University of Oxford, UK',
+    date: '2026',
+    note: '2nd edition',
+    type: 'Workshop',
+  },
+  {
+    title: 'AI for Digital Historical Scholarship',
+    venue: 'Aarhus University, Denmark',
+    date: '2026',
+    type: 'Workshop',
+  },
   {
     title: 'Computational History',
     venue: 'Warwick University, UK',
