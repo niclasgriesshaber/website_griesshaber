@@ -33,6 +33,11 @@ export default function Events() {
     if (Number.isNaN(nb)) return -1
     return na - nb
   })
+  const tbaIdx = upcomingByYear.findIndex((g) => g.year === 'Other')
+  if (tbaIdx !== -1 && upcomingByYear.length > 1) {
+    const [tba] = upcomingByYear.splice(tbaIdx, 1)
+    upcomingByYear[upcomingByYear.length - 1].items.push(...tba.items)
+  }
   const pastByYear = groupByYear(past)
 
   return (
