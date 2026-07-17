@@ -23,7 +23,7 @@ export const upcoming: Event[] = [
     type: 'Workshop',
   },
   {
-    title: 'Digital History',
+    title: 'Digital History Seminar',
     venue: 'Berlin, Germany',
     date: 'November 11, 2026',
     type: 'Presentation',
