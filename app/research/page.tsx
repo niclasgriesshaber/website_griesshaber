@@ -141,11 +141,11 @@ export default function Research() {
           {/* Vision Statement */}
           <div className="mb-10 space-y-4">
             <p className="text-gray-800 text-justify leading-relaxed">
-              I research AI for History and Economic History. My work focuses on using AI to build large-scale historical datasets from primary-source PDFs to study how institutions shaped patenting in Germany&apos;s Second Industrial Revolution.
+              I research AI for History and Economic History. My work focuses on using AI to build large-scale historical datasets from primary-source PDFs to study how institutions shaped patenting behaviour in Germany&apos;s Second Industrial Revolution.
             </p>
 
             <p className="text-gray-800 text-justify leading-relaxed">
-              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1911. This also offers an AI for Science angle with the{' '}
+              Beyond this, I contribute to a new paradigm of historical research: counterfactual history through AI. We train language models exclusively on historical data up to a specific cutoff date, such as 1911. This also offers an AI for Science angle for the{' '}
               <A href="https://time.com/7277608/demis-hassabis-interview-time100-2025/">
                 Hassabis AGI Einstein Test
               </A>
