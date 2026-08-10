@@ -21,7 +21,13 @@ const SUBSTACK_URL = 'https://substack.com/@niclasgriesshaber'
 // Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
 // detection), so we proxy through rss2json. Their free tier serves up to
 // 10k requests/day; we use ~1/build, with a daily cron rebuild.
-const PROXY_URL = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(FEED_URL)}`
+// rss2json's first cold fetch of a feed often fails and the error can be
+// served from its cache, so later attempts add a cache-busting param to
+// the feed URL to force a fresh fetch.
+function proxyUrl(attempt: number): string {
+  const feed = attempt <= 1 ? FEED_URL : `${FEED_URL}?cb=${attempt}`
+  return `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`
+}
 const EXCERPT_CHARS = 240
 const WORDS_PER_MINUTE = 200
 
@@ -82,11 +88,11 @@ async function getPosts(): Promise<Post[]> {
     'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
     'Accept': 'application/json',
   }
-  const MAX_ATTEMPTS = 3
+  const MAX_ATTEMPTS = 5
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      const res = await fetch(PROXY_URL, { headers, next: { revalidate: 3600 } })
+      const res = await fetch(proxyUrl(attempt), { headers, next: { revalidate: 3600 } })
       if (!res.ok) {
         console.error(`[blog] proxy attempt ${attempt} returned status ${res.status}`)
       } else {
@@ -113,7 +119,7 @@ async function getPosts(): Promise<Post[]> {
       console.error(`[blog] proxy attempt ${attempt} threw:`, err)
     }
     if (attempt < MAX_ATTEMPTS) {
-      await new Promise((r) => setTimeout(r, 1000 * attempt))
+      await new Promise((r) => setTimeout(r, 1500 * attempt))
     }
   }
 
