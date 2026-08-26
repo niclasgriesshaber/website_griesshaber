@@ -43,6 +43,7 @@ const papers: Paper[] = [
         <A href="https://yaolu.github.io">Yao Lu</A>
       </>
     ),
+    venue: 'Accepted, EMNLP 2026 (Main Conference)',
     action: { label: 'Try the History LLM', href: 'https://typewriter.chat' },
     abstract:
       'We introduce TypewriterLM, a 7.24B History language model (LM) trained exclusively on English text predating 1913. Developing History LMs requires addressing challenges in data quality and availability, preventing temporal leakage, designing temporally consistent post-training pipelines, and constructing reliable evaluations. To address these issues, we construct TypewriterCorpus, a 54B-token historical corpus collected from diverse archival and linguistically annotated sources with extensive data cleaning and leakage mitigation procedures. Furthermore, we introduce lexically grounded instructing tuning, a post-training framework that constraints responses to remain directly grounded in historical source documents. Using this framework we construct two historical instruction tuning datasets: History-LIMA and History-SelfInstruct. To evaluate capability and temporal consistency, we introduce History-Event, a benchmark suite for evaluating competence, temporal grounding and data leakage. We release TypewriterLM and all associated resources to support future research on historical language models.',
