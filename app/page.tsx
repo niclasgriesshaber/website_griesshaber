@@ -51,7 +51,6 @@ export default function Home() {
               {/* Left side - Economic History Quotes - Hidden on mobile */}
               <div className="hidden lg:block px-4">
                 <div className="relative h-[500px] pointer-events-none">
-                  {/* Remove Sheilagh quotes from left column by filtering */}
                   <FloatingElements side="left" />
                 </div>
               </div>

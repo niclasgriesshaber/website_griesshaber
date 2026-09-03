@@ -17,10 +17,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
   const [shouldShowTop, setShouldShowTop] = useState(true)
   const [shouldShowBottom, setShouldShowBottom] = useState(false)
   
-  // For the home page left column, exclude quotes by Sheilagh Ogilvie per request
-  const sourceArray = side === 'right'
-    ? formulas
-    : quotes.filter(q => q.author !== 'Sheilagh Ogilvie')
+  const sourceArray = side === 'right' ? formulas : quotes
 
   useEffect(() => {
     const startCycles = () => {
