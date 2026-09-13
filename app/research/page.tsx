@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '../../lib/metadata'
 import { ReactNode } from 'react'
 import { Nav } from '../../components/Nav'
 import { PageBackground } from '../../components/PageBackground'
 
-export const metadata: Metadata = {
-  title: 'Research - Niclas Griesshaber',
-  description: 'Research',
-}
+export const metadata: Metadata = pageMetadata('Research', '/research/')
 
 function A({ href, children }: { href: string; children: ReactNode }) {
   return (

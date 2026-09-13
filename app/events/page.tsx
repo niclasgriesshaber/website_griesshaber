@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '../../lib/metadata'
 import { upcoming, past, type Event } from '../../data/events'
 import { Nav } from '../../components/Nav'
 import { PageBackground } from '../../components/PageBackground'
 
-export const metadata: Metadata = {
-  title: 'Events - Niclas Griesshaber',
-  description: 'Upcoming and past talks, workshops, and events',
-}
+export const metadata: Metadata = pageMetadata('Events', '/events/')
 
 function stripYear(date: string): string {
   return date.replace(/,\s*\d{4}$/, '')

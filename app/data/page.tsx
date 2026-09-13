@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '../../lib/metadata'
 import { datasets } from '../../data/datasets'
 import { Nav } from '../../components/Nav'
 import { PageBackground } from '../../components/PageBackground'
 
-export const metadata: Metadata = {
-  title: 'Data - Niclas Griesshaber',
-  description: 'Research datasets',
-}
+export const metadata: Metadata = pageMetadata('Data', '/data/')
 
 const PLATFORM_URL = 'https://historymind.ai'
 

@@ -1,12 +1,10 @@
 // import TextParticles from '../../components/TextParticles' // Uncomment to reactivate animation
 import { Metadata } from 'next'
+import { pageMetadata } from '../../lib/metadata'
 import { Nav } from '../../components/Nav'
 import { PageBackground } from '../../components/PageBackground'
 
-export const metadata: Metadata = {
-  title: 'CV - Niclas Griesshaber',
-  description: 'Download CV as PDF',
-}
+export const metadata: Metadata = pageMetadata('CV', '/cv/')
 
 export default function CV() {
   return (

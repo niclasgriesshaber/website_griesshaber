@@ -1,12 +1,10 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
+import { pageMetadata } from '../../lib/metadata'
 import { Nav } from '../../components/Nav'
 import { PageBackground } from '../../components/PageBackground'
 
-export const metadata: Metadata = {
-  title: 'Blog - Niclas Griesshaber',
-  description: 'Latest posts from my Substack',
-}
+export const metadata: Metadata = pageMetadata('Blog', '/blog/')
 
 type Post = {
   title: string
