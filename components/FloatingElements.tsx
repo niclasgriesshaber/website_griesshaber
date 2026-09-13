@@ -11,6 +11,21 @@ interface FloatingElementsProps {
   side: 'left' | 'right'
 }
 
+/** Tracks a media query, starting as `false` so server and client agree on the first paint. */
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false)
+
+  useEffect(() => {
+    const mql = window.matchMedia(query)
+    setMatches(mql.matches)
+    const onChange = (e: MediaQueryListEvent) => setMatches(e.matches)
+    mql.addEventListener('change', onChange)
+    return () => mql.removeEventListener('change', onChange)
+  }, [query])
+
+  return matches
+}
+
 export function FloatingElements({ side }: FloatingElementsProps) {
   const [topIndex, setTopIndex] = useState(0)
   const [bottomIndex, setBottomIndex] = useState(1)
@@ -19,50 +34,71 @@ export function FloatingElements({ side }: FloatingElementsProps) {
   
   const sourceArray = side === 'right' ? formulas : quotes
 
+  // The columns are `hidden lg:block`, so below lg this component would render
+  // KaTeX and run its timers for something nobody can see. Gate on the same
+  // breakpoint, and hold the cycle still for readers who ask for less motion.
+  const isWide = useMediaQuery('(min-width: 1024px)')
+  const reduceMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
+  const animate = isWide && !reduceMotion
+
   useEffect(() => {
-    const startCycles = () => {
-      const FADE_DURATION = 2500;  // 2.5 seconds for fade in/out
-      const DISPLAY_DURATION = 10000;  // 10 seconds total cycle
-      const OFFSET = 2500;  // 2.5 seconds offset between elements
+    if (!animate) return
 
-      // Top cycle starts first
-      const topCycle = () => {
-        setShouldShowTop(false)  // Start fade out
-        setTimeout(() => {
-          setTopIndex(current => (current + 2) % sourceArray.length)
-          setShouldShowTop(true)  // Immediately start fade in
-        }, FADE_DURATION)
-      }
+    const FADE_DURATION = 2500;  // 2.5 seconds for fade in/out
+    const DISPLAY_DURATION = 10000;  // 10 seconds total cycle
+    const OFFSET = 2500;  // 2.5 seconds offset between elements
 
-      // Bottom cycle follows the same pattern with offset
-      const bottomCycle = () => {
-        setShouldShowBottom(false)  // Start fade out
-        setTimeout(() => {
-          setBottomIndex(current => (current + 2) % sourceArray.length)
-          setShouldShowBottom(true)  // Immediately start fade in
-        }, FADE_DURATION)
-      }
-
-      // Combined cycle that maintains the sequence
-      const fullCycle = () => {
-        topCycle()
-        setTimeout(bottomCycle, OFFSET)
-      }
-
-      // Initial setup - staggered fade in
-      setShouldShowTop(true)
-      setTimeout(() => {
-        setBottomIndex(1)
-        setShouldShowBottom(true)
-      }, OFFSET)
-
-      // Start the cycles
-      const interval = setInterval(fullCycle, DISPLAY_DURATION)
-      return () => clearInterval(interval)
+    // Every timer is tracked so unmounting (e.g. navigating to another tab)
+    // tears the whole cycle down instead of leaving it running.
+    const timeouts = new Set<ReturnType<typeof setTimeout>>()
+    const later = (fn: () => void, ms: number) => {
+      const id = setTimeout(() => {
+        timeouts.delete(id)
+        fn()
+      }, ms)
+      timeouts.add(id)
     }
 
-    startCycles()
-  }, [sourceArray.length])
+    // Top cycle starts first
+    const topCycle = () => {
+      setShouldShowTop(false)  // Start fade out
+      later(() => {
+        setTopIndex(current => (current + 2) % sourceArray.length)
+        setShouldShowTop(true)  // Immediately start fade in
+      }, FADE_DURATION)
+    }
+
+    // Bottom cycle follows the same pattern with offset
+    const bottomCycle = () => {
+      setShouldShowBottom(false)  // Start fade out
+      later(() => {
+        setBottomIndex(current => (current + 2) % sourceArray.length)
+        setShouldShowBottom(true)  // Immediately start fade in
+      }, FADE_DURATION)
+    }
+
+    // Combined cycle that maintains the sequence
+    const fullCycle = () => {
+      topCycle()
+      later(bottomCycle, OFFSET)
+    }
+
+    // Initial setup - staggered fade in
+    setShouldShowTop(true)
+    later(() => {
+      setBottomIndex(1)
+      setShouldShowBottom(true)
+    }, OFFSET)
+
+    // Start the cycles
+    const interval = setInterval(fullCycle, DISPLAY_DURATION)
+
+    return () => {
+      clearInterval(interval)
+      timeouts.forEach(clearTimeout)
+      timeouts.clear()
+    }
+  }, [animate, sourceArray.length])
 
   const renderFormula = (formula: string, position: 'top' | 'bottom', shouldShow: boolean) => (
     <motion.div
@@ -109,7 +145,10 @@ export function FloatingElements({ side }: FloatingElementsProps) {
         left: '5%',
         maxWidth: '320px',
         zIndex: 10,
-        fontFamily: 'Computer Modern'
+        // KaTeX is already loaded for the formulas opposite; KaTeX_Main *is*
+        // Computer Modern, so the quotes can use the real thing rather than
+        // naming a font nothing on the page provides.
+        fontFamily: '"KaTeX_Main", "Computer Modern", Georgia, serif'
       }}
     >
       <div className="text-left">
@@ -123,16 +162,22 @@ export function FloatingElements({ side }: FloatingElementsProps) {
     </motion.div>
   )
 
+  if (!isWide) return null
+
+  // Without the cycle running, both slots simply stay on screen.
+  const showTop = animate ? shouldShowTop : true
+  const showBottom = animate ? shouldShowBottom : true
+
   return (
     <div className="relative w-full h-full" style={{ overflow: 'visible' }}>
       <div className="absolute inset-0" style={{ overflow: 'visible' }}>
-        {side === 'right' 
-          ? renderFormula(sourceArray[topIndex] as string, 'top', shouldShowTop)
-          : renderQuote(sourceArray[topIndex] as { text: string; author: string }, 'top', shouldShowTop)
+        {side === 'right'
+          ? renderFormula(sourceArray[topIndex] as string, 'top', showTop)
+          : renderQuote(sourceArray[topIndex] as { text: string; author: string }, 'top', showTop)
         }
         {side === 'right'
-          ? renderFormula(sourceArray[bottomIndex] as string, 'bottom', shouldShowBottom)
-          : renderQuote(sourceArray[bottomIndex] as { text: string; author: string }, 'bottom', shouldShowBottom)
+          ? renderFormula(sourceArray[bottomIndex] as string, 'bottom', showBottom)
+          : renderQuote(sourceArray[bottomIndex] as { text: string; author: string }, 'bottom', showBottom)
         }
       </div>
     </div>

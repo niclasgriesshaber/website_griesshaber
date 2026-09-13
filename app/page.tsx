@@ -1,38 +1,11 @@
-import Image from 'next/image'
 import { FloatingElements } from '../components/FloatingElements'
 import { Nav } from '../components/Nav'
+import { PageBackground } from '../components/PageBackground'
 
 export default function Home() {
   return (
     <main className="min-h-screen relative">
-      {/* Animated Background Elements - Optimized for performance */}
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
-        {/* Animated gradient orbs with GPU acceleration */}
-        <div 
-          className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] animate-pulse-slow will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(147,197,253,0.1) 50%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div 
-          className="absolute top-[20%] right-[-20%] w-[1000px] h-[1000px] animate-pulse-slower will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(165,180,252,0.1) 50%, transparent 70%)',
-            filter: 'blur(80px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div 
-          className="absolute bottom-[-20%] left-[30%] w-[900px] h-[900px] animate-float will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(167,139,250,0.1) 50%, transparent 70%)',
-            filter: 'blur(70px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-      </div>
+      <PageBackground />
 
       {/* Content */}
       <div className="relative z-10">
@@ -57,14 +30,23 @@ export default function Home() {
 
               {/* Image Container - responsive size and constrained to center track */}
               <div className="relative justify-self-center w-full max-w-[500px] aspect-square rounded-2xl overflow-hidden bg-blue-100/60 shadow-xl transition-all duration-500 hover:shadow-2xl hover:scale-[1.01] z-20">
-                <Image
-                  src="/griesshaber.jpg"
-                  alt="Niclas Griesshaber"
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  priority
-                  className="rounded-2xl"
-                />
+                {/* Hand-rolled <picture> rather than next/image: images are
+                    `unoptimized` for the static export, so this is what lets the
+                    WebP (150kB) reach every modern browser with the original
+                    JPEG (379kB) left as the fallback. */}
+                <picture>
+                  <source srcSet="/griesshaber.webp" type="image/webp" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/griesshaber.jpg"
+                    alt="Niclas Griesshaber"
+                    width={1040}
+                    height={901}
+                    fetchPriority="high"
+                    decoding="async"
+                    className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+                  />
+                </picture>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 transition-opacity duration-500 hover:opacity-100"></div>
               </div>
 

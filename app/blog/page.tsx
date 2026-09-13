@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { Nav } from '../../components/Nav'
+import { PageBackground } from '../../components/PageBackground'
 
 export const metadata: Metadata = {
   title: 'Blog - Niclas Griesshaber',
@@ -13,6 +14,8 @@ type Post = {
   date: string
   excerpt: string
   image: string
+  /** srcSet of CDN-resized variants; empty when the CDN is unavailable. */
+  imageSrcSet: string
   readTime: number
 }
 
@@ -76,6 +79,33 @@ function readTimeMin(content: string): number {
   return words ? Math.max(1, Math.round(words / WORDS_PER_MINUTE)) : 0
 }
 
+// Substack's RSS links the untouched S3 original (often >300kB, ~1200px wide)
+// for a thumbnail we render at 192px. Substack's own image CDN re-serves any
+// URL at a given width, which is ~14x smaller. We verify it at build time and
+// fall back to the original if it ever stops answering, so the static HTML
+// never points at a URL we haven't checked.
+const THUMB_WIDTHS = [400, 800]
+
+function cdnUrl(src: string, width: number): string {
+  const opts = `w_${width},c_limit,f_auto,q_auto:good,fl_progressive:steep`
+  return `https://substackcdn.com/image/fetch/${opts}/${encodeURIComponent(src)}`
+}
+
+async function cdnSrcSet(src: string): Promise<string> {
+  if (!/^https?:\/\//.test(src)) return ''
+  try {
+    const res = await fetch(cdnUrl(src, THUMB_WIDTHS[0]), { method: 'HEAD' })
+    if (!res.ok) {
+      console.error(`[blog] image CDN returned ${res.status} for ${src}`)
+      return ''
+    }
+  } catch (err) {
+    console.error(`[blog] image CDN check threw for ${src}:`, err)
+    return ''
+  }
+  return THUMB_WIDTHS.map((w) => `${cdnUrl(src, w)} ${w}w`).join(', ')
+}
+
 function fmtDate(s: string): string {
   if (!s) return ''
   const d = new Date(s)
@@ -102,17 +132,21 @@ async function getPosts(): Promise<Post[]> {
         } else if (!data.items || data.items.length === 0) {
           console.error(`[blog] proxy attempt ${attempt} returned 0 items`)
         } else {
-          return data.items.slice(0, 10).map((item) => {
-            const content = item.content ?? ''
-            return {
-              title: item.title ?? '',
-              link: item.link ?? '',
-              date: item.pubDate ?? '',
-              excerpt: buildExcerpt(content, item.description ?? ''),
-              image: item.enclosure?.link || item.thumbnail || firstBodyImage(content),
-              readTime: readTimeMin(content),
-            }
-          })
+          return await Promise.all(
+            data.items.slice(0, 10).map(async (item) => {
+              const content = item.content ?? ''
+              const image = item.enclosure?.link || item.thumbnail || firstBodyImage(content)
+              return {
+                title: item.title ?? '',
+                link: item.link ?? '',
+                date: item.pubDate ?? '',
+                excerpt: buildExcerpt(content, item.description ?? ''),
+                image,
+                imageSrcSet: image ? await cdnSrcSet(image) : '',
+                readTime: readTimeMin(content),
+              }
+            })
+          )
         }
       }
     } catch (err) {
@@ -132,32 +166,7 @@ export default async function Blog() {
 
   return (
     <main className="min-h-screen relative">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
-        <div
-          className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] animate-pulse-slow will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(147,197,253,0.1) 50%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div
-          className="absolute top-[20%] right-[-20%] w-[1000px] h-[1000px] animate-pulse-slower will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(165,180,252,0.1) 50%, transparent 70%)',
-            filter: 'blur(80px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div
-          className="absolute bottom-[-20%] left-[30%] w-[900px] h-[900px] animate-float will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(167,139,250,0.1) 50%, transparent 70%)',
-            filter: 'blur(70px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-      </div>
+      <PageBackground />
 
       <div className="relative z-10">
         <Nav />
@@ -181,21 +190,29 @@ export default async function Blog() {
               </p>
             ) : (
               <ul className="space-y-8">
-                {posts.map((post) => (
+                {posts.map((post, i) => (
                   <li key={post.link} className="flex flex-col md:flex-row gap-4 md:gap-6">
                     {post.image && (
                       <Link
                         href={post.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-shrink-0 block overflow-hidden rounded-md md:w-48"
+                        className="flex-shrink-0 block overflow-hidden rounded-md md:w-48 bg-gray-100"
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={post.image}
+                          src={post.imageSrcSet ? cdnUrl(post.image, THUMB_WIDTHS[0]) : post.image}
+                          srcSet={post.imageSrcSet || undefined}
+                          sizes="(min-width: 768px) 12rem, 100vw"
                           alt=""
+                          width={400}
+                          height={300}
                           className="w-full md:w-48 aspect-[4/3] object-cover transition-transform duration-300 hover:scale-[1.02]"
-                          loading="lazy"
+                          /* The first two thumbnails are above the fold on both
+                             mobile and desktop; lazy-loading them only delays them. */
+                          loading={i < 2 ? 'eager' : 'lazy'}
+                          fetchPriority={i < 2 ? 'high' : 'auto'}
+                          decoding="async"
                         />
                       </Link>
                     )}

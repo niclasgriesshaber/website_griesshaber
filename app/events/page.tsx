@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Metadata } from 'next'
 import { upcoming, past, type Event } from '../../data/events'
 import { Nav } from '../../components/Nav'
+import { PageBackground } from '../../components/PageBackground'
 
 export const metadata: Metadata = {
   title: 'Events - Niclas Griesshaber',
@@ -10,6 +11,26 @@ export const metadata: Metadata = {
 
 function stripYear(date: string): string {
   return date.replace(/,\s*\d{4}$/, '')
+}
+
+/** Marks an entry as clickable. The row's hover tint says so on desktop, but
+ *  there is no hover on touch, so linked entries need a visible cue of their own. */
+function ExternalMark() {
+  return (
+    <svg
+      className="inline-block w-3 h-3 ml-1.5 -translate-y-px text-gray-400 transition-colors group-hover:text-blue-600"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M7 17L17 7" />
+      <path d="M8 7h9v9" />
+    </svg>
+  )
 }
 
 function groupByYear(events: Event[]): { year: string; items: Event[] }[] {
@@ -42,32 +63,7 @@ export default function Events() {
 
   return (
     <main className="min-h-screen relative">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
-        <div
-          className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] animate-pulse-slow will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(147,197,253,0.1) 50%, transparent 70%)',
-            filter: 'blur(60px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div
-          className="absolute top-[20%] right-[-20%] w-[1000px] h-[1000px] animate-pulse-slower will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(99,102,241,0.2) 0%, rgba(165,180,252,0.1) 50%, transparent 70%)',
-            filter: 'blur(80px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-        <div
-          className="absolute bottom-[-20%] left-[30%] w-[900px] h-[900px] animate-float will-change-transform"
-          style={{
-            background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(167,139,250,0.1) 50%, transparent 70%)',
-            filter: 'blur(70px)',
-            transform: 'translate3d(0, 0, 0)'
-          }}
-        />
-      </div>
+      <PageBackground />
 
       <div className="relative z-10">
         <Nav />
@@ -102,6 +98,7 @@ export default function Events() {
                                 {e.note && (
                                   <span className="text-gray-400 italic"> &middot; {e.note}</span>
                                 )}
+                                {e.link && <ExternalMark />}
                               </p>
                               {e.venue && (
                                 <p className="text-gray-600">{e.venue}</p>
@@ -159,6 +156,7 @@ export default function Events() {
                                 {e.note && (
                                   <span className="text-gray-400 italic"> &middot; {e.note}</span>
                                 )}
+                                {e.link && <ExternalMark />}
                               </p>
                               {e.venue && (
                                 <p className="text-gray-600">{e.venue}</p>
