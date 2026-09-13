@@ -31,7 +31,7 @@ type Paper = {
 
 const papers: Paper[] = [
   {
-    title: 'Pretraining Language Models on Historical Text',
+    title: 'A Language Model from 1913: Pretraining on Historical Text',
     link: 'https://arxiv.org/abs/2606.02991',
     authors: (
       <>
