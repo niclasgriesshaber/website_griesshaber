@@ -20,7 +20,7 @@ export const upcoming: Event[] = [
     title: 'Computational Future',
     venue: 'EPFL, Lausanne, Switzerland',
     date: 'October 15–16, 2026',
-    type: 'Workshop',
+    type: 'Presentation',
     link: 'https://computationalfuture.org/',
   },
   {
