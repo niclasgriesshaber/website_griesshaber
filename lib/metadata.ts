@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-export const SITE_NAME = 'Niclas Grießhaber'
+export const SITE_NAME = 'Niclas Griesshaber'
 
 const OG_IMAGE = {
   url: '/og-ai4history.jpg',
@@ -12,7 +12,7 @@ const OG_IMAGE = {
 /**
  * Metadata for a section page.
  *
- * Share cards carry one line and nothing else — `Research - Niclas Grießhaber`.
+ * Share cards carry one line and nothing else — `Research - Niclas Griesshaber`.
  * `description: null` clears the one inherited from the root layout, which
  * platforms would otherwise fall back to for the grey subtitle. Only the home
  * page keeps a description ("AI for History"); see app/layout.tsx.
