@@ -1,10 +1,14 @@
 /**
  * The three drifting gradient orbs behind every page. Fixed, non-interactive,
  * and identical site-wide — kept here so the six pages share one definition.
+ *
+ * `min-h-lvh` sizes the layer to the *large* viewport: on iOS Safari `inset-0`
+ * alone tracks the small viewport, so once the toolbar collapsed on scroll a
+ * white strip of body showed through under the content at the bottom.
  */
 export function PageBackground() {
   return (
-    <div className="fixed inset-0 -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
+    <div className="fixed inset-0 min-h-lvh -z-10 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/80 overflow-hidden">
       {/* Animated gradient orbs with GPU acceleration */}
       <div
         className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] animate-pulse-slow will-change-transform"

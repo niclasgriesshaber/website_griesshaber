@@ -11,12 +11,6 @@ export type Event = {
 
 export const upcoming: Event[] = [
   {
-    title: 'Application of AI for the Digitalization and Analysis of Historical Data',
-    venue: 'Public University of Navarre (UPNA), Spain',
-    date: 'September 16–17, 2026',
-    type: 'Workshop',
-  },
-  {
     title: 'Computational Future',
     venue: 'EPFL, Lausanne, Switzerland',
     date: 'October 15–16, 2026',
@@ -44,6 +38,12 @@ export const upcoming: Event[] = [
 ]
 
 export const past: Event[] = [
+  {
+    title: 'Application of AI for the Digitalization and Analysis of Historical Data',
+    venue: 'Public University of Navarre (UPNA), Spain',
+    date: '2026',
+    type: 'Workshop',
+  },
   {
     title: 'OxDSS × TVG: AI for Digital Scholarship Workshop',
     venue: 'University of Oxford, UK',

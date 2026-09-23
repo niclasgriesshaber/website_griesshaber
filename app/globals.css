@@ -4,7 +4,9 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-rgb: 255, 255, 255;
+  /* The end tint of the PageBackground gradient (indigo-50 at 80% over white),
+     so anything the fixed layer does not cover blends in instead of flashing white. */
+  --background-rgb: 241, 245, 255;
 }
 
 /* Force consistent scrollbar width and optimize scrolling */
@@ -13,11 +15,15 @@ html {
   scrollbar-gutter: stable;
   -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
   min-height: 100%;
+  background-color: rgb(var(--background-rgb));
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-rgb));
+  /* Same gradient as PageBackground, spanning the whole document as a fallback
+     behind the fixed layer (mobile toolbars, overscroll). */
+  background: rgb(var(--background-rgb))
+    linear-gradient(to bottom right, rgba(239, 246, 255, 0.8), #fff, rgba(238, 242, 255, 0.8));
   overflow-x: hidden;
   min-height: 100vh;
   /* Allow natural scrolling behavior */
