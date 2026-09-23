@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { Inter, Caveat } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import { SITE_NAME, OG_IMAGE } from "../lib/metadata";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-// Cursive face for the floating quotes on the landing page, exposed as a CSS
-// variable so only the quotes opt into it.
-const caveat = Caveat({ subsets: ["latin"], variable: "--font-quote" });
+// Calligraphic italic for the floating quotes on the landing page, exposed as
+// a CSS variable so only the quotes opt into it.
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["italic"],
+  variable: "--font-quote",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://niclasgriesshaber.com"),
@@ -50,7 +55,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${caveat.variable}`}>{children}</body>
+      <body className={`${inter.className} ${cormorant.variable}`}>{children}</body>
     </html>
   );
 }

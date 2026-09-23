@@ -176,12 +176,13 @@ export function FloatingElements({ side }: FloatingElementsProps) {
         left: '5%',
         right: 'auto',
         maxWidth: '320px',
-        // Caveat, loaded in app/layout.tsx as --font-quote.
-        fontFamily: 'var(--font-quote), cursive',
+        // Cormorant Garamond italic, loaded in app/layout.tsx as --font-quote.
+        fontFamily: 'var(--font-quote), Georgia, serif',
+        fontStyle: 'italic',
       }}
     >
-      <div className="text-left text-gray-800">
-        <p className="mb-1 text-[1.2rem] leading-snug">
+      <div className="text-left text-gray-800 font-medium">
+        <p className="mb-1 text-[1.125rem] leading-snug">
           &ldquo;{quote.text}&rdquo;
         </p>
         <p className="text-base text-gray-500 text-right">
