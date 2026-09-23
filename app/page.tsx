@@ -36,7 +36,6 @@ export default function Home() {
                     JPEG (379kB) left as the fallback. */}
                 <picture>
                   <source srcSet="/griesshaber.webp" type="image/webp" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/griesshaber.jpg"
                     alt="Niclas Griesshaber"
