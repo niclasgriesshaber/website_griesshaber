@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Caveat } from "next/font/google";
 import { SITE_NAME, OG_IMAGE } from "../lib/metadata";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
+// Cursive face for the floating quotes on the landing page, exposed as a CSS
+// variable so only the quotes opt into it.
+const caveat = Caveat({ subsets: ["latin"], variable: "--font-quote" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://niclasgriesshaber.com"),
@@ -47,7 +50,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} ${caveat.variable}`}>{children}</body>
     </html>
   );
 }

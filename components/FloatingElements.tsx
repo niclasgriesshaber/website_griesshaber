@@ -146,9 +146,6 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: shouldShow ? 1 : 0 }}
       transition={{ duration: 2.5, ease: "easeInOut" }}
-      // `katex-inherit` (globals.css) sets the formulas in the page font
-      // rather than KaTeX's Computer Modern, matching the heading and quotes.
-      className="katex-inherit font-light"
       style={slotStyle(position)}
     >
       <div style={{ overflow: 'hidden', display: 'flex', justifyContent: 'center', padding: '0 4px' }}>
@@ -174,14 +171,20 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: shouldShow ? 0.8 : 0 }}
       transition={{ duration: 2.5, ease: "easeInOut" }}
-      style={{ ...slotStyle(position), left: '5%', right: 'auto', maxWidth: '320px' }}
+      style={{
+        ...slotStyle(position),
+        left: '5%',
+        right: 'auto',
+        maxWidth: '320px',
+        // Caveat, loaded in app/layout.tsx as --font-quote.
+        fontFamily: 'var(--font-quote), cursive',
+      }}
     >
-      {/* Same face and weight as the "I research AI for History" heading. */}
-      <div className="text-left font-light">
-        <p className="mb-1.5 text-base leading-snug">
+      <div className="text-left text-gray-800">
+        <p className="mb-1 text-[1.2rem] leading-snug">
           &ldquo;{quote.text}&rdquo;
         </p>
-        <p className="text-sm text-gray-500 text-right">
+        <p className="text-base text-gray-500 text-right">
           — {quote.author}
         </p>
       </div>
