@@ -1,15 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { SITE_NAME, OG_IMAGE } from "../lib/metadata";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 // Calligraphic italic for the floating quotes on the landing page, exposed as
-// a CSS variable so only the quotes opt into it.
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  style: ["italic"],
+// a CSS variable so only the quotes opt into it. Self-hosted (OFL, from Google
+// Fonts' latin subset) because next/font/google's loader failed on the
+// GitHub runner while parsing Google's CSS response for this family.
+const cormorant = localFont({
+  src: "./fonts/cormorant-garamond-italic.woff2",
+  weight: "300 700",
+  style: "italic",
   variable: "--font-quote",
 });
 
