@@ -1,20 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import localFont from "next/font/local";
 import { SITE_NAME, OG_IMAGE } from "../lib/metadata";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
-// Calligraphic italic for the floating quotes on the landing page, exposed as
-// a CSS variable so only the quotes opt into it. Self-hosted (OFL, from Google
-// Fonts' latin subset) because next/font/google's loader failed on the
-// GitHub runner while parsing Google's CSS response for this family.
-const cormorant = localFont({
-  src: "./fonts/cormorant-garamond-italic.woff2",
-  weight: "300 700",
-  style: "italic",
-  variable: "--font-quote",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://niclasgriesshaber.com"),
@@ -58,7 +47,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${cormorant.variable}`}>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

@@ -176,16 +176,17 @@ export function FloatingElements({ side }: FloatingElementsProps) {
         left: '5%',
         right: 'auto',
         maxWidth: '320px',
-        // Cormorant Garamond italic, loaded in app/layout.tsx as --font-quote.
-        fontFamily: 'var(--font-quote), Georgia, serif',
-        fontStyle: 'italic',
+        // KaTeX is already loaded for the formulas opposite; KaTeX_Main *is*
+        // Computer Modern, so the quotes can use the real thing rather than
+        // naming a font nothing on the page provides.
+        fontFamily: '"KaTeX_Main", "Computer Modern", Georgia, serif',
       }}
     >
-      <div className="text-left text-gray-800 font-medium">
-        <p className="mb-1 text-[1.125rem] leading-snug">
+      <div className="text-left italic">
+        <p className="mb-1.5 text-base leading-snug">
           &ldquo;{quote.text}&rdquo;
         </p>
-        <p className="text-base text-gray-500 text-right">
+        <p className="text-sm text-gray-500 text-right">
           — {quote.author}
         </p>
       </div>
