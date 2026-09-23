@@ -124,21 +124,32 @@ export function FloatingElements({ side }: FloatingElementsProps) {
     }
   }, [animate, side, sourceArray.length])
 
+  // Each column is split into two halves, one per slot, and a slot's content is
+  // centred within its half. Fixed offsets (15% / 55%) let a long quote run
+  // into the one below it; halves cannot overlap whatever their length.
+  const slotStyle = (position: 'top' | 'bottom'): React.CSSProperties => ({
+    position: 'absolute',
+    top: position === 'top' ? 0 : '50%',
+    height: '50%',
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    overflow: 'visible',
+  })
+
   const renderFormula = (formula: string, position: 'top' | 'bottom', shouldShow: boolean) => (
     <motion.div
       key={`${position}-${formula}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: shouldShow ? 1 : 0 }}
       transition={{ duration: 2.5, ease: "easeInOut" }}
-      style={{
-        position: 'absolute',
-        top: position === 'top' ? '15%' : '55%',
-        left: 0,
-        right: 0,
-        zIndex: 10,
-        overflow: 'visible',
-        width: '100%'
-      }}
+      // `katex-inherit` (globals.css) sets the formulas in the page font
+      // rather than KaTeX's Computer Modern, matching the heading and quotes.
+      className="katex-inherit font-light"
+      style={slotStyle(position)}
     >
       <div style={{ overflow: 'hidden', display: 'flex', justifyContent: 'center', padding: '0 4px' }}>
         <div
@@ -163,20 +174,11 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: shouldShow ? 0.8 : 0 }}
       transition={{ duration: 2.5, ease: "easeInOut" }}
-      style={{
-        position: 'absolute',
-        top: position === 'top' ? '15%' : '55%',
-        left: '5%',
-        maxWidth: '320px',
-        zIndex: 10,
-        // KaTeX is already loaded for the formulas opposite; KaTeX_Main *is*
-        // Computer Modern, so the quotes can use the real thing rather than
-        // naming a font nothing on the page provides.
-        fontFamily: '"KaTeX_Main", "Computer Modern", Georgia, serif'
-      }}
+      style={{ ...slotStyle(position), left: '5%', right: 'auto', maxWidth: '320px' }}
     >
-      <div className="text-left">
-        <p className="mb-2 text-base leading-relaxed" style={{ fontSize: '1rem' }}>
+      {/* Same face and weight as the "I research AI for History" heading. */}
+      <div className="text-left font-light">
+        <p className="mb-1.5 text-base leading-snug">
           &ldquo;{quote.text}&rdquo;
         </p>
         <p className="text-sm text-gray-500 text-right">

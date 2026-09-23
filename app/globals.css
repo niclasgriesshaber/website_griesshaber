@@ -29,6 +29,24 @@ body {
   /* Allow natural scrolling behavior */
 }
 
+/* Floating formulas on the landing page, set in the page font (Inter) rather
+   than KaTeX's Computer Modern so they match the heading and the quotes.
+   Large operators and stretched delimiters keep KaTeX's own glyphs, which
+   Inter does not provide. */
+.katex-inherit .katex,
+.katex-inherit .katex .textrm,
+.katex-inherit .katex .mathnormal,
+.katex-inherit .katex .mathit,
+.katex-inherit .katex .mathbf,
+.katex-inherit .katex .mainrm,
+.katex-inherit .katex .mathrm,
+.katex-inherit .katex .amsrm {
+  font-family: inherit;
+}
+.katex-inherit .katex .mathbf {
+  font-weight: 600;
+}
+
 /* ML Theme Animations */
 .ml-theme {
   position: relative;
