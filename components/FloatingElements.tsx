@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import katex from 'katex'
 import 'katex/dist/katex.min.css'
@@ -29,6 +29,8 @@ function useMediaQuery(query: string): boolean {
 export function FloatingElements({ side }: FloatingElementsProps) {
   const [topIndex, setTopIndex] = useState(0)
   const [bottomIndex, setBottomIndex] = useState(1)
+  // What each slot shows right now, readable from inside the timers.
+  const shown = useRef<{ top: number; bottom: number }>({ top: 0, bottom: 1 })
   const [shouldShowTop, setShouldShowTop] = useState(true)
   const [shouldShowBottom, setShouldShowBottom] = useState(false)
   
@@ -48,6 +50,25 @@ export function FloatingElements({ side }: FloatingElementsProps) {
     const DISPLAY_DURATION = 10000;  // 10 seconds total cycle
     const OFFSET = 2500;  // 2.5 seconds offset between elements
 
+    // Quotes come up in random order; formulas keep their fixed sequence.
+    // A random pick never repeats what either slot is currently showing.
+    const random = side === 'left'
+    const pickNext = (slot: 'top' | 'bottom'): number => {
+      const other = slot === 'top' ? shown.current.bottom : shown.current.top
+      const n = sourceArray.length
+      let next: number
+      if (random) {
+        const current = shown.current[slot]
+        do {
+          next = Math.floor(Math.random() * n)
+        } while (n > 2 && (next === current || next === other))
+      } else {
+        next = (shown.current[slot] + 2) % n
+      }
+      shown.current[slot] = next
+      return next
+    }
+
     // Every timer is tracked so unmounting (e.g. navigating to another tab)
     // tears the whole cycle down instead of leaving it running.
     const timeouts = new Set<ReturnType<typeof setTimeout>>()
@@ -63,7 +84,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
     const topCycle = () => {
       setShouldShowTop(false)  // Start fade out
       later(() => {
-        setTopIndex(current => (current + 2) % sourceArray.length)
+        setTopIndex(pickNext('top'))
         setShouldShowTop(true)  // Immediately start fade in
       }, FADE_DURATION)
     }
@@ -72,7 +93,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
     const bottomCycle = () => {
       setShouldShowBottom(false)  // Start fade out
       later(() => {
-        setBottomIndex(current => (current + 2) % sourceArray.length)
+        setBottomIndex(pickNext('bottom'))
         setShouldShowBottom(true)  // Immediately start fade in
       }, FADE_DURATION)
     }
@@ -83,10 +104,13 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       later(bottomCycle, OFFSET)
     }
 
-    // Initial setup - staggered fade in
+    // Initial setup - staggered fade in, starting from a random pair when random
+    if (random) {
+      setTopIndex(pickNext('top'))
+    }
     setShouldShowTop(true)
     later(() => {
-      setBottomIndex(1)
+      setBottomIndex(random ? pickNext('bottom') : 1)
       setShouldShowBottom(true)
     }, OFFSET)
 
@@ -98,7 +122,7 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       timeouts.forEach(clearTimeout)
       timeouts.clear()
     }
-  }, [animate, sourceArray.length])
+  }, [animate, side, sourceArray.length])
 
   const renderFormula = (formula: string, position: 'top' | 'bottom', shouldShow: boolean) => (
     <motion.div
@@ -152,10 +176,10 @@ export function FloatingElements({ side }: FloatingElementsProps) {
       }}
     >
       <div className="text-left">
-        <p className="mb-2 text-base leading-relaxed italic" style={{ fontSize: '1rem' }}>
-          {quote.text}
+        <p className="mb-2 text-base leading-relaxed" style={{ fontSize: '1rem' }}>
+          &ldquo;{quote.text}&rdquo;
         </p>
-        <p className="text-sm text-gray-500 text-right italic">
+        <p className="text-sm text-gray-500 text-right">
           — {quote.author}
         </p>
       </div>

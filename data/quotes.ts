@@ -1,35 +1,26 @@
 // Every quote below is verbatim from the cited primary source.
 // `source` is not rendered; it records where the wording was verified.
+// Single-author quotes only, and authors are named without initials.
 export const quotes = [
   {
     text: "Institutions are the rules of the game in a society or, more formally, are the humanly devised constraints that shape human interaction.",
-    author: "Douglass C. North",
+    author: "Douglass North",
     source: "Institutions, Institutional Change and Economic Performance (Cambridge University Press, 1990), p. 3"
   },
   {
     text: "Institutions are not necessarily or even usually created to be socially efficient; rather they, or at least the formal rules, are created to serve the interests of those with the bargaining power to devise new rules.",
-    author: "Douglass C. North",
+    author: "Douglass North",
     source: "Institutions, Institutional Change and Economic Performance (Cambridge University Press, 1990), p. 16"
   },
   {
     text: "Institutions provide the incentive structure of an economy; as that structure evolves, it shapes the direction of economic change towards growth, stagnation, or decline.",
-    author: "Douglass C. North",
+    author: "Douglass North",
     source: "'Institutions', Journal of Economic Perspectives 5(1), 1991, p. 97"
   },
   {
     text: "Throughout history, institutions have been devised by human beings to create order and reduce uncertainty in exchange.",
-    author: "Douglass C. North",
+    author: "Douglass North",
     source: "'Institutions', Journal of Economic Perspectives 5(1), 1991, p. 97"
-  },
-  {
-    text: "Countries differ in their economic success because of their different institutions, the rules influencing how the economy works, and the incentives that motivate people.",
-    author: "Daron Acemoğlu & James A. Robinson",
-    source: "Why Nations Fail (Crown, 2012), ch. 3, 'Extractive and Inclusive Economic Institutions'"
-  },
-  {
-    text: "Economic institutions shape economic incentives: the incentives to become educated, to save and invest, to innovate and adopt new technologies, and so on.",
-    author: "Daron Acemoğlu & James A. Robinson",
-    source: "Why Nations Fail (Crown, 2012), ch. 3"
   },
   {
     text: "The historical findings on guilds thus provide strong support for the view that institutions arise and survive for centuries not because they are efficient but because they serve the distributional interests of powerful groups.",
@@ -57,13 +48,8 @@ export const quotes = [
     source: "A Culture of Growth: The Origins of the Modern Economy (Princeton University Press, 2016), ch. 1"
   },
   {
-    text: "In contrast to the long run stagnation of living standards suggested by daily real wage rates, output-based GDP per capita exhibits modest but positive trend growth.",
-    author: "Stephen Broadberry et al.",
-    source: "Broadberry, Campbell, Klein, Overton & van Leeuwen, 'British Economic Growth, 1270–1870: An Output-Based Approach' (working paper, 2011), abstract"
-  },
-  {
     text: "Patent institutions provided incentives for a \"democratization of invention,\" encouraging the creative efforts of a broad cross-section of the population.",
-    author: "B. Zorina Khan",
+    author: "Zorina Khan",
     source: "'Cliometric Approaches to Creativity: Patents, Prizes, Copyrights, and Trademarks', in Handbook of Cliometrics (Springer, 2023)"
   },
   {
