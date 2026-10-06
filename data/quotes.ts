@@ -25,7 +25,7 @@ export const quotes = [
   {
     text: "The historical findings on guilds thus provide strong support for the view that institutions arise and survive for centuries not because they are efficient but because they serve the distributional interests of powerful groups.",
     author: "Sheilagh Ogilvie",
-    source: "'The Economics of Guilds', Journal of Economic Perspectives 28(4), 2014, p. 189"
+    source: "'The Economics of Guilds', Journal of Economic Perspectives 28(4), 2014, p. 188"
   },
   {
     text: "Distributional conflicts provide a better explanation than efficiency for the core economic institutions of pre-industrial Europe: serfdom, the community, the craft guild, and the merchant guild.",
@@ -35,17 +35,17 @@ export const quotes = [
   {
     text: "Guilds certainly generated monopoly rents for their members, but there is little evidence that such rents encouraged innovation.",
     author: "Sheilagh Ogilvie",
-    source: "The European Guilds: An Economic Analysis (Princeton University Press, 2019), ch. 10 (Conclusion)"
+    source: "The European Guilds: An Economic Analysis (Princeton University Press, 2019), p. 569 (ch. 10, Conclusion)"
   },
   {
     text: "Technological progress is like a fragile and vulnerable plant, whose flourishing is not only dependent on the appropriate surroundings and climate, but whose life is almost always short. It is highly sensitive to the social and economic environment and can easily be arrested by relatively small external changes.",
     author: "Joel Mokyr",
-    source: "The Lever of Riches: Technological Creativity and Economic Progress (Oxford University Press, 1990), ch. 1"
+    source: "The Lever of Riches: Technological Creativity and Economic Progress (Oxford University Press, 1990), p. 16 (ch. 1)"
   },
   {
     text: "In short, if economists admit that economic history cannot do without institutions, it cannot do without a better understanding of culture.",
     author: "Joel Mokyr",
-    source: "A Culture of Growth: The Origins of the Modern Economy (Princeton University Press, 2016), ch. 1"
+    source: "A Culture of Growth: The Origins of the Modern Economy (Princeton University Press, 2016), p. 12 (ch. 1)"
   },
   {
     text: "Patent institutions provided incentives for a \"democratization of invention,\" encouraging the creative efforts of a broad cross-section of the population.",
