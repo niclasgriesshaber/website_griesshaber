@@ -24,20 +24,6 @@ export const metadata: Metadata = {
     description: "AI for History",
     images: [OG_IMAGE.url],
   },
-  icons: {
-    icon: [
-      {
-        url: '/favicon.png?v=3.0',
-        sizes: '32x32',
-        type: 'image/png'
-      },
-      {
-        url: '/favicon.ico?v=3.0',
-        sizes: '16x16',
-        type: 'image/x-icon'
-      }
-    ]
-  }
 };
 
 export default function RootLayout({

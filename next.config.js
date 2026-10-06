@@ -16,6 +16,8 @@ const nextConfig = {
     webpack: (config) => {
         config.module.rules.push({
             test: /\.(png|jpe?g|gif)$/i,
+            // Next's own loader must handle the app/ metadata images (apple-icon.png etc.)
+            exclude: /[\\/]app[\\/](apple-icon|icon|opengraph-image|twitter-image)[^\\/]*$/,
             type: 'asset/resource',
         });
         return config;
