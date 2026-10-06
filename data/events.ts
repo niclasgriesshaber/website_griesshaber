@@ -115,7 +115,6 @@ export const past: Event[] = [
     venue: 'Lund University, Sweden',
     date: '2025',
     type: 'Presentation',
-    link: 'https://wehc2025.com/WEHC_Conference_Program_2025_v3.pdf',
   },
   {
     title: 'Joan Thirsk Dissertation Prize Lecture',
