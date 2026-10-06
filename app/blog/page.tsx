@@ -17,13 +17,14 @@ type Post = {
   readTime: number
 }
 
-// Both publications: The AI Historian (current) and the earlier
-// "Niclas Griesshaber" Substack, whose posts still live at the old address.
-const FEED_URLS = [
-  'https://ai4history.substack.com/feed',
-  'https://aieconhistory.substack.com/feed',
+// Niclas's own Substack in full, plus only his own posts on the team's
+// publication The AI Historian (its feed names the author of each post).
+type Feed = { url: string; author?: string }
+const FEEDS: Feed[] = [
+  { url: 'https://aieconhistory.substack.com/feed' },
+  { url: 'https://ai4history.substack.com/feed', author: 'griesshaber' },
 ]
-const SUBSTACK_URL = 'https://ai4history.substack.com'
+const SUBSTACK_URL = 'https://substack.com/@niclasgriesshaber'
 // Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
 // detection), so we proxy through rss2json. Their free tier serves up to
 // 10k requests/day; we use ~1/build, with a daily cron rebuild.
@@ -39,6 +40,7 @@ const WORDS_PER_MINUTE = 200
 
 type ProxyItem = {
   title?: string
+  author?: string
   link?: string
   pubDate?: string
   description?: string
@@ -116,7 +118,7 @@ function fmtDate(s: string): string {
   return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
 }
 
-async function fetchFeed(feedUrl: string): Promise<Post[]> {
+async function fetchFeed({ url: feedUrl, author }: Feed): Promise<Post[]> {
   const headers = {
     'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
     'Accept': 'application/json',
@@ -135,8 +137,11 @@ async function fetchFeed(feedUrl: string): Promise<Post[]> {
         } else if (!data.items || data.items.length === 0) {
           console.error(`[blog] ${feedUrl} attempt ${attempt} returned 0 items`)
         } else {
+          const mine = author
+            ? data.items.filter((item) => (item.author ?? '').toLowerCase().includes(author))
+            : data.items
           return await Promise.all(
-            data.items.map(async (item) => {
+            mine.map(async (item) => {
               const content = item.content ?? ''
               const image = item.enclosure?.link || item.thumbnail || firstBodyImage(content)
               return {
@@ -167,7 +172,7 @@ async function fetchFeed(feedUrl: string): Promise<Post[]> {
 // Newest first across both publications. A feed that fails just contributes
 // nothing, so one Substack being unreachable never hides the other.
 async function getPosts(): Promise<Post[]> {
-  const feeds = await Promise.all(FEED_URLS.map(fetchFeed))
+  const feeds = await Promise.all(FEEDS.map(fetchFeed))
   const posts = feeds.flat()
   if (posts.length === 0) {
     console.error('[blog] no posts from any feed; rendering empty state')
@@ -200,7 +205,7 @@ export default async function Blog() {
                   rel="noopener noreferrer"
                   className="text-blue-500 hover:text-blue-600 transition-colors"
                 >
-                  ai4history.substack.com
+                  substack.com/@niclasgriesshaber
                 </Link>
                 .
               </p>
