@@ -17,8 +17,12 @@ type Post = {
   readTime: number
 }
 
-// The AI Historian; the earlier aieconhistory.substack.com feed is retired.
-const FEED_URL = 'https://ai4history.substack.com/feed'
+// Both publications: The AI Historian (current) and the earlier
+// "Niclas Griesshaber" Substack, whose posts still live at the old address.
+const FEED_URLS = [
+  'https://ai4history.substack.com/feed',
+  'https://aieconhistory.substack.com/feed',
+]
 const SUBSTACK_URL = 'https://ai4history.substack.com'
 // Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
 // detection), so we proxy through rss2json. Their free tier serves up to
@@ -26,8 +30,8 @@ const SUBSTACK_URL = 'https://ai4history.substack.com'
 // rss2json's first cold fetch of a feed often fails and the error can be
 // served from its cache, so later attempts add a cache-busting param to
 // the feed URL to force a fresh fetch.
-function proxyUrl(attempt: number): string {
-  const feed = attempt <= 1 ? FEED_URL : `${FEED_URL}?cb=${attempt}`
+function proxyUrl(feedUrl: string, attempt: number): string {
+  const feed = attempt <= 1 ? feedUrl : `${feedUrl}?cb=${attempt}`
   return `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}`
 }
 const EXCERPT_CHARS = 240
@@ -112,7 +116,7 @@ function fmtDate(s: string): string {
   return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
 }
 
-async function getPosts(): Promise<Post[]> {
+async function fetchFeed(feedUrl: string): Promise<Post[]> {
   const headers = {
     'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
     'Accept': 'application/json',
@@ -121,18 +125,18 @@ async function getPosts(): Promise<Post[]> {
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
     try {
-      const res = await fetch(proxyUrl(attempt), { headers, next: { revalidate: 3600 } })
+      const res = await fetch(proxyUrl(feedUrl, attempt), { headers, next: { revalidate: 3600 } })
       if (!res.ok) {
-        console.error(`[blog] proxy attempt ${attempt} returned status ${res.status}`)
+        console.error(`[blog] ${feedUrl} attempt ${attempt} returned status ${res.status}`)
       } else {
         const data = (await res.json()) as { status?: string; items?: ProxyItem[] }
         if (data.status !== 'ok') {
-          console.error(`[blog] proxy attempt ${attempt} returned status field "${data.status}"`)
+          console.error(`[blog] ${feedUrl} attempt ${attempt} returned status field "${data.status}"`)
         } else if (!data.items || data.items.length === 0) {
-          console.error(`[blog] proxy attempt ${attempt} returned 0 items`)
+          console.error(`[blog] ${feedUrl} attempt ${attempt} returned 0 items`)
         } else {
           return await Promise.all(
-            data.items.slice(0, 10).map(async (item) => {
+            data.items.map(async (item) => {
               const content = item.content ?? ''
               const image = item.enclosure?.link || item.thumbnail || firstBodyImage(content)
               return {
@@ -149,15 +153,28 @@ async function getPosts(): Promise<Post[]> {
         }
       }
     } catch (err) {
-      console.error(`[blog] proxy attempt ${attempt} threw:`, err)
+      console.error(`[blog] ${feedUrl} attempt ${attempt} threw:`, err)
     }
     if (attempt < MAX_ATTEMPTS) {
       await new Promise((r) => setTimeout(r, 1500 * attempt))
     }
   }
 
-  console.error('[blog] all proxy attempts failed; rendering empty state')
+  console.error(`[blog] all attempts failed for ${feedUrl}`)
   return []
+}
+
+// Newest first across both publications. A feed that fails just contributes
+// nothing, so one Substack being unreachable never hides the other.
+async function getPosts(): Promise<Post[]> {
+  const feeds = await Promise.all(FEED_URLS.map(fetchFeed))
+  const posts = feeds.flat()
+  if (posts.length === 0) {
+    console.error('[blog] no posts from any feed; rendering empty state')
+    return []
+  }
+  const time = (p: Post) => new Date(p.date).getTime() || 0
+  return posts.sort((a, b) => time(b) - time(a)).slice(0, 10)
 }
 
 export default async function Blog() {
