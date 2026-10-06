@@ -5,8 +5,13 @@ on:
     branches: ["main"]
   workflow_dispatch:
   schedule:
-    # Rebuild daily at 06:00 UTC so new Substack posts appear without a manual push
+    # Rebuild daily so new Substack posts appear without a manual push.
+    # Posts usually go out at 07:00 UK time (06:00 UTC in summer), so the
+    # later runs catch a post the 06:00 build raced with, and give the
+    # rss2json cache time to refresh.
     - cron: '0 6 * * *'
+    - cron: '0 7 * * *'
+    - cron: '0 12 * * *'
 
 permissions:
   contents: read
