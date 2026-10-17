@@ -11,13 +11,6 @@ export type Event = {
 
 export const upcoming: Event[] = [
   {
-    title: 'Computational Future',
-    venue: 'EPFL, Lausanne, Switzerland',
-    date: 'October 15–16, 2026',
-    type: 'Presentation',
-    link: 'https://computationalfuture.org/',
-  },
-  {
     title: 'AI in the Historical Humanities and Social Sciences',
     venue: 'University of Regensburg, Germany',
     date: 'November 6–8, 2026',
@@ -35,9 +28,22 @@ export const upcoming: Event[] = [
     date: 'November 16, 2026',
     type: 'Presentation',
   },
+  {
+    title: 'NLP Reading Group',
+    venue: 'Imperial College London, UK',
+    date: 'December 1, 2026',
+    type: 'Presentation',
+  },
 ]
 
 export const past: Event[] = [
+  {
+    title: 'Computational Future',
+    venue: 'EPFL, Lausanne, Switzerland',
+    date: '2026',
+    type: 'Presentation',
+    link: 'https://computationalfuture.org/',
+  },
   {
     title: 'Application of AI for the Digitalization and Analysis of Historical Data',
     venue: 'Public University of Navarre (UPNA), Spain',
