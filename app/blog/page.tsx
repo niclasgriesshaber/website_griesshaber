@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import Link from 'next/link'
 import { Metadata } from 'next'
 import { pageMetadata } from '../../lib/metadata'
@@ -19,15 +21,21 @@ type Post = {
 
 // Niclas's own Substack in full, plus only his own posts on the team's
 // publication The AI Historian (its feed names the author of each post).
-type Feed = { url: string; author?: string }
+// `snapshot` is a copy of the feed committed in data/feeds/, refreshed with
+// `npm run snapshot-feeds` (keep the list there in sync with this one).
+type Feed = { url: string; author?: string; snapshot: string }
 const FEEDS: Feed[] = [
-  { url: 'https://aieconhistory.substack.com/feed' },
-  { url: 'https://ai4history.substack.com/feed', author: 'griesshaber' },
+  { url: 'https://aieconhistory.substack.com/feed', snapshot: 'aieconhistory.xml' },
+  { url: 'https://ai4history.substack.com/feed', author: 'griesshaber', snapshot: 'ai4history.xml' },
 ]
 const SUBSTACK_URL = 'https://substack.com/@niclasgriesshaber'
-// Substack 403s requests from GitHub Actions runner IPs (Cloudflare bot
-// detection), so we proxy through rss2json. Their free tier serves up to
-// 10k requests/day; we use ~1/build, with a daily cron rebuild.
+// Each feed is read from the first source that answers: Substack directly,
+// then the rss2json proxy, then the committed snapshot. Substack 403s
+// requests from GitHub Actions runner IPs (Cloudflare bot detection), which
+// is why the proxy exists; on 21 Oct 2026 rss2json itself started answering
+// with a Cloudflare challenge, which emptied the Blog tab — the snapshot
+// means a dead proxy now costs only posts newer than the last snapshot.
+// rss2json's free tier serves up to 10k requests/day; we use ~1/build.
 // rss2json's first cold fetch of a feed often fails and the error can be
 // served from its cache, so later attempts add a cache-busting param to
 // the feed URL to force a fresh fetch.
@@ -118,11 +126,55 @@ function fmtDate(s: string): string {
   return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })
 }
 
-async function fetchFeed({ url: feedUrl, author }: Feed): Promise<Post[]> {
-  const headers = {
-    'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
-    'Accept': 'application/json',
+const HEADERS = {
+  'User-Agent': 'NiclasBlog/1.0 (+https://niclasgriesshaber.com)',
+}
+
+// The text of an RSS element, unwrapped from CDATA or entity-decoded.
+function rssText(xml: string, tag: string): string {
+  const m = xml.match(new RegExp(`<${tag}(?:\\s[^>]*)?>([\\s\\S]*?)</${tag}>`))
+  if (!m) return ''
+  const cdata = m[1].trim().match(/^<!\[CDATA\[([\s\S]*)\]\]>$/)
+  return cdata ? cdata[1] : decodeEntities(m[1].trim())
+}
+
+// Substack's RSS, mapped to the same shape rss2json returns.
+function parseRss(xml: string): ProxyItem[] {
+  return Array.from(xml.matchAll(/<item>([\s\S]*?)<\/item>/g), ([, item]) => {
+    const enclosure = item.match(/<enclosure[^>]*\surl="([^"]+)"/)
+    return {
+      title: rssText(item, 'title'),
+      author: rssText(item, 'dc:creator'),
+      link: rssText(item, 'link'),
+      pubDate: rssText(item, 'pubDate'),
+      description: rssText(item, 'description'),
+      content: rssText(item, 'content:encoded'),
+      enclosure: enclosure ? { link: decodeEntities(enclosure[1]) } : undefined,
+    }
+  })
+}
+
+async function fetchDirect(feedUrl: string): Promise<ProxyItem[] | null> {
+  try {
+    const res = await fetch(feedUrl, { headers: HEADERS })
+    if (!res.ok) {
+      console.error(`[blog] ${feedUrl} direct fetch returned status ${res.status}`)
+      return null
+    }
+    const items = parseRss(await res.text())
+    if (items.length === 0) {
+      console.error(`[blog] ${feedUrl} direct fetch returned 0 items`)
+      return null
+    }
+    return items
+  } catch (err) {
+    console.error(`[blog] ${feedUrl} direct fetch threw:`, err)
+    return null
   }
+}
+
+async function fetchViaProxy(feedUrl: string): Promise<ProxyItem[] | null> {
+  const headers = { ...HEADERS, 'Accept': 'application/json' }
   const MAX_ATTEMPTS = 5
 
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
@@ -137,24 +189,7 @@ async function fetchFeed({ url: feedUrl, author }: Feed): Promise<Post[]> {
         } else if (!data.items || data.items.length === 0) {
           console.error(`[blog] ${feedUrl} attempt ${attempt} returned 0 items`)
         } else {
-          const mine = author
-            ? data.items.filter((item) => (item.author ?? '').toLowerCase().includes(author))
-            : data.items
-          return await Promise.all(
-            mine.map(async (item) => {
-              const content = item.content ?? ''
-              const image = item.enclosure?.link || item.thumbnail || firstBodyImage(content)
-              return {
-                title: item.title ?? '',
-                link: item.link ?? '',
-                date: item.pubDate ?? '',
-                excerpt: buildExcerpt(content, item.description ?? ''),
-                image,
-                imageSrcSet: image ? await cdnSrcSet(image) : '',
-                readTime: readTimeMin(content),
-              }
-            })
-          )
+          return data.items
         }
       }
     } catch (err) {
@@ -165,8 +200,43 @@ async function fetchFeed({ url: feedUrl, author }: Feed): Promise<Post[]> {
     }
   }
 
-  console.error(`[blog] all attempts failed for ${feedUrl}`)
-  return []
+  console.error(`[blog] all proxy attempts failed for ${feedUrl}`)
+  return null
+}
+
+async function readSnapshot(file: string): Promise<ProxyItem[]> {
+  try {
+    return parseRss(await readFile(path.join(process.cwd(), 'data', 'feeds', file), 'utf8'))
+  } catch (err) {
+    console.error(`[blog] snapshot ${file} unreadable:`, err)
+    return []
+  }
+}
+
+async function fetchFeed({ url: feedUrl, author, snapshot }: Feed): Promise<Post[]> {
+  let items = (await fetchDirect(feedUrl)) ?? (await fetchViaProxy(feedUrl))
+  if (!items) {
+    console.error(`[blog] ${feedUrl} unreachable; using snapshot data/feeds/${snapshot}`)
+    items = await readSnapshot(snapshot)
+  }
+  const mine = author
+    ? items.filter((item) => (item.author ?? '').toLowerCase().includes(author))
+    : items
+  return Promise.all(
+    mine.map(async (item) => {
+      const content = item.content ?? ''
+      const image = item.enclosure?.link || item.thumbnail || firstBodyImage(content)
+      return {
+        title: item.title ?? '',
+        link: item.link ?? '',
+        date: item.pubDate ?? '',
+        excerpt: buildExcerpt(content, item.description ?? ''),
+        image,
+        imageSrcSet: image ? await cdnSrcSet(image) : '',
+        readTime: readTimeMin(content),
+      }
+    })
+  )
 }
 
 // Newest first across both publications. A feed that fails just contributes
