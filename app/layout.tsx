@@ -3,15 +3,18 @@ import { Inter } from "next/font/google";
 import { SITE_NAME, OG_IMAGE } from "../lib/metadata";
 import "./globals.css";
 
+const DESCRIPTION =
+  "Researcher at the University of Oxford working on AI for History and Economic History";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://niclasgriesshaber.com"),
   title: SITE_NAME,
-  description: "AI for History",
+  description: DESCRIPTION,
   openGraph: {
     title: SITE_NAME,
-    description: "AI for History",
+    description: DESCRIPTION,
     url: "/",
     siteName: SITE_NAME,
     images: [OG_IMAGE],
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
-    description: "AI for History",
+    description: DESCRIPTION,
     images: [OG_IMAGE.url],
   },
 };
